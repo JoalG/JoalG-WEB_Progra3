@@ -1,1 +1,21 @@
-<p>category-card works!</p>
+<hr>
+
+
+<h2>
+    Categorias
+    <button type="button" class="btn btn-light" (click)="hide=!hide" data-toggle="collapse" data-target="#categories">
+        <i class="fas " [ngClass]="hide?'fa-chevron-down':'fa-chevron-up'"></i>
+    </button>
+</h2>
+
+
+
+
+<div id="categories" class="collapse show">
+    <div *ngFor="let category of categories, index as i" class="d-inline">
+        <button type="button" class="btn my-2 mr-2" [ngClass]="category.selected? 'btn-success': 'btn-secondary'" (click)="selectCategory(i)">
+                <h4>{{category.name}} <span class="badge badge-light">{{category.amount}}</span></h4> 
+        </button>
+    </div>
+</div>
+<hr>
