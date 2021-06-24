@@ -155,11 +155,31 @@
                             <div class="card-body" [formGroup]="getInputGroup(i)">
                                 <div class="form-group">
                                     <label for="inputName">Nombre</label>
-                                    <input type="text" class="form-control" id="inputName" placeholder="Ej. centro" formControlName="name">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="inputName" 
+                                        placeholder="Ej. centro" 
+                                        formControlName="name"
+                                        [class.is-invalid] = "inputNameInvalid(i)"
+                                        >
+                                    <small *ngIf="inputNameInvalid(i)" class="text-danger">
+                                        Debe ingresar una nombre para la entrada
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputType">Tipo</label>
-                                    <input type="text" class="form-control" id="inputType" placeholder="Ej. Un valor para la raiz" formControlName="type">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="inputType" 
+                                        placeholder="Ej. Un valor para la raiz" 
+                                        formControlName="type"
+                                        [class.is-invalid] = "inputTypeInvalid(i)"
+                                    >
+                                    <small *ngIf="inputTypeInvalid(i)" class="text-danger">
+                                        Debe ingresar un tipo para la entrada
+                                    </small>
                                 </div>
                                 <div class="text-right">
                                     <button type="button" class="btn btn-danger" (click)="removeInput(i)"><i class="fas fa-trash-alt"></i></button>
@@ -180,12 +200,32 @@
                         <div class="card">
                             <div class="card-body" [formGroup]="getOutputGroup(i)">
                                 <div class="form-group">
-                                    <label for="inputName">Nombre</label>
-                                    <input type="text" class="form-control" id="inputName" placeholder="Ej. centro" formControlName="name">
+                                    <label for="outputName">Nombre</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="outputName" 
+                                        placeholder="Ej. centro" 
+                                        formControlName="name"
+                                        [class.is-invalid] = "outputNameInvalid(i)"
+                                    >
+                                    <small *ngIf="outputNameInvalid(i)" class="text-danger">
+                                        Debe ingresar una nombre para la salida
+                                    </small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputType">Tipo</label>
-                                    <input type="text" class="form-control" id="inputType" placeholder="Ej. Un valor para la raiz" formControlName="type">
+                                    <label for="outputType">Tipo</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="outputType" 
+                                        placeholder="Ej. Un valor para la raiz" 
+                                        formControlName="type"
+                                        [class.is-invalid] = "outputTypeInvalid(i)"
+                                    >
+                                    <small *ngIf="outputTypeInvalid(i)" class="text-danger">
+                                        Debe ingresar un tipo para la salida
+                                    </small>
                                 </div>
                                 <div class="text-right">
                                     <button type="button" class="btn btn-danger" (click)="removeOutput(i)"><i class="fas fa-trash-alt"></i></button>
@@ -202,7 +242,17 @@
 
                 <h4>Código</h4>
                 <div class="form-group" [formGroup]="solution">
-                    <textarea class="form-control" id="details" rows="3" formControlName="code"></textarea>
+                    <textarea 
+                        class="form-control" 
+                        d="details" 
+                        rows="3" 
+                        formControlName="code"
+                        [class.is-invalid] = "codeInvalid"
+                    >
+                    </textarea>
+                    <small *ngIf="codeInvalid" class="text-danger">
+                        Debe ingresar código para la solución
+                    </small>
                 </div>
             </div>
         </div>

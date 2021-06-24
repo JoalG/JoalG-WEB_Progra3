@@ -58,12 +58,32 @@ export class FormExerciseComponent implements OnInit {
     return this.exerciseForm.get('details')?.invalid && this.exerciseForm.get('details')?.touched;
   }
 
+  get codeInvalid(){
+    return this.exerciseForm.get('solution')?.get('code')?.invalid && this.exerciseForm.get('solution')?.get('code')?.touched;
+  }
+
   exampleCallInvalid(i: number){
     return this.examples.controls[i].get('call')?.invalid && this.examples.controls[i].get('call')?.touched;
   }
 
   exampleResultInvalid(i: number){
     return this.examples.controls[i].get('result')?.invalid && this.examples.controls[i].get('result')?.touched;
+  }
+
+  inputNameInvalid(i: number){
+    return this.inputs.controls[i].get('name')?.invalid && this.inputs.controls[i].get('name')?.touched;
+  }
+
+  inputTypeInvalid(i: number){
+    return this.inputs.controls[i].get('type')?.invalid && this.inputs.controls[i].get('type')?.touched;
+  }
+
+  outputNameInvalid(i: number){
+    return this.outputs.controls[i].get('name')?.invalid && this.outputs.controls[i].get('name')?.touched;
+  }
+
+  outputTypeInvalid(i: number){
+    return this.outputs.controls[i].get('type')?.invalid && this.outputs.controls[i].get('type')?.touched;
   }
 
   createExerciseForm(){
