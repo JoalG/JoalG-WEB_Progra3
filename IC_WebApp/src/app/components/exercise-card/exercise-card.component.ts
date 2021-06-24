@@ -10,6 +10,7 @@ import { Exercise } from 'src/app/models/exercise.model';
 export class ExerciseCardComponent implements OnInit {
 
   @Input() exercise!: Exercise;
+  hide:boolean = false;
 
   constructor() { }
 
@@ -20,6 +21,10 @@ export class ExerciseCardComponent implements OnInit {
    
 
     return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
+  }
+  picha(){
+    console.log("picha");
+    
   }
 
 }
