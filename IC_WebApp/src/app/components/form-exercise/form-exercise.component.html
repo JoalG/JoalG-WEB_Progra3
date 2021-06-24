@@ -1,7 +1,7 @@
 <div class="container-fluid pt-3 main-cont">
     <h1>Nuevo Ejercicio</h1>
     <hr>
-    <form [formGroup]="exerciseForm">
+    <form [formGroup]="exerciseForm" (ngSubmit)="saveExercise()">
         <div class="card mx-md-5">
             <div class="card-header">
                 <h2>Información General</h2>

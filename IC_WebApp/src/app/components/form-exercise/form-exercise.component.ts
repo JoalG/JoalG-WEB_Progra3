@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form-exercise',
@@ -13,6 +13,59 @@ export class FormExerciseComponent implements OnInit {
   exerciseForm!: FormGroup;
   @Input() exerciseCode: string = "none";
 
+  /*
+  exercise: any = 
+    {
+      "call":"arbol (centro, hijoizquierdo, hijoderecho)",
+      "creator":"Diego Mora",
+      "code":"00061",
+      "examples":[
+        {
+            "call":"arbol(100,[],[])",
+            "result":"100",
+            "comment":"En este caso este árbol aún no tiene hijos"
+        },
+        {
+            "call":"arbol(100,[90,80],[110,105])",
+            "result":"[10, [5, 4, 6], [7, 8, 9]]",
+            "comment":""
+        },
+        {
+            "call":"arbol(10,[5,4,6],[7,8,9])",
+            "result":"[10, [5, 4, 6], [7, 8, 9]]",
+            "comment":""
+        }
+      ],
+      "solution":{
+        "outputs":[
+            {
+              "name":"Una lista",
+              "type":"Lista que representa un árbol"
+            }
+        ],
+        "code":"def arbol (centro, hijoizquierdo, hijoderecho):\n    if hijoizquierdo == [] and hijoderecho == []:\n        return centro\n    else:\n        return [centro] + [hijoizquierdo] + [hijoderecho]\n\n",
+        "inputs":[
+            {
+              "name":"centro",
+              "type":"Un valor para la raiz"
+            },
+            {
+              "name":"hijoizquierdo",
+              "type":"Una lista de un subarbol izquierdo"
+            },
+            {
+              "name":"hijoderecho",
+              "type":"Una lista de un subarbol derecho"
+            }
+        ]
+      },
+      "level":"1",
+      "created":"2021-06-17",
+      "name":"Árbol",
+      "section":"Árboles",
+      "details":"Realice una función que retorne una lista que simboliza un árbol, por lo que se conforma por hijo derecha e izquierdo y el valor que simboliza la raíz."
+    }
+  */
 
   ngOnInit(): void {
     this.createExerciseForm();
@@ -34,6 +87,10 @@ export class FormExerciseComponent implements OnInit {
 
   get outputs(){
     return <FormArray>this.exerciseForm.get('solution')?.get('outputs');
+  }
+
+  get code(){
+    return <FormControl>this.exerciseForm.get('solution')?.get('code');
   }
 
   // Gets for validations
@@ -176,5 +233,43 @@ export class FormExerciseComponent implements OnInit {
   
   removeOutput(i: number){
     this.outputs.removeAt(i);
+  }
+
+  saveExercise(){
+    if(this.exerciseForm.invalid){
+      Object.values(this.exerciseForm.controls).forEach(control =>{
+
+        // If example
+        if(control instanceof FormArray){
+          for (let i = 0; i < control.length; i++) {
+            this.getExampleGroup(i).markAllAsTouched();
+          }
+        }
+
+        // if not solution
+        if(control instanceof FormControl){
+          control.markAsTouched();
+        }
+      })
+
+      // for solution
+      for (let i = 0; i < this.inputs.length; i++) {
+        this.getInputGroup(i).markAllAsTouched();
+      }
+      for (let i = 0; i < this.outputs.length; i++) {
+        this.getOutputGroup(i).markAllAsTouched();
+      }
+      this.code.markAsTouched();
+    }
+    else{
+      // save new exercise
+      if(this.exerciseCode === "none"){
+        // POST
+      }
+      // update exercise
+      else{
+        // PUT
+      }
+    }
   }
 }
