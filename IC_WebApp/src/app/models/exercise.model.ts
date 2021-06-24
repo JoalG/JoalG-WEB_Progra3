@@ -3,9 +3,9 @@ export interface Exercise{
     creator:string;
     code:string;
     examples:Example[];
-    solutions: Solution[];
+    solution: Solution;
     level:string;
-    created:Date;
+    created:string;
     name:string;
     section:string;
     details:string;
@@ -19,7 +19,7 @@ interface Example{
 
 interface Solution{
     outputs: Output[];
-    code:"string";
+    code:string;
     inputs: Input[];
 }
 
