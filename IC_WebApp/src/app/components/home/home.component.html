@@ -1,1 +1,14 @@
-<p>home works!</p>
+<div class="container-fluid">
+    <hr>
+    <app-category-card></app-category-card>
+    <hr>
+    <app-difficulty-card></app-difficulty-card>
+    <hr>
+    <pre><code [highlight]="exercises[0].solution.code"></code></pre>
+    <div class="row">
+        <div *ngFor="let exercise of exercises" class="col-md-4 col-12 py-3 ">
+            <app-exercise-card [exercise]=exercise></app-exercise-card>
+        </div>
+    </div>
+    <hr>
+</div>

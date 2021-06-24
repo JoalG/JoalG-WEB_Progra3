@@ -1,1 +1,17 @@
-<p>category-card works!</p>
+<h3>
+    Categorias
+    <button type="button" class="btn btn-light" (click)="hide=!hide" data-toggle="collapse" data-target="#categories">
+        <i class="fas " [ngClass]="hide?'fa-chevron-down':'fa-chevron-up'"></i>
+    </button>
+</h3>
+
+<div id="categories" class="collapse show">
+    <div *ngFor="let category of categories, index as i" class="d-inline">
+        <button type="button" class="btn my-2 mr-2" [ngClass]="category.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectCategory(i)">
+                <h5>
+                    {{category.name}} 
+                    <span class="badge" [ngClass]="category.selected? 'badge-light': 'badge-dark'">{{category.amount}}</span>
+                </h5> 
+        </button>
+    </div>
+</div>
