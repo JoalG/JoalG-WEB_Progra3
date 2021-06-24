@@ -98,11 +98,31 @@
                             <div class="card-body" [formGroup]="getExampleGroup(i)">
                                 <div class="form-group">
                                     <label for="exampleCall">Llamada</label>
-                                    <input type="text" class="form-control" id="exampleCall" placeholder="Ej. arbol(100,[90,80],[110,105])" formControlName="call">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="exampleCall" 
+                                        placeholder="Ej. arbol(100,[90,80],[110,105])" 
+                                        formControlName="call"
+                                        [class.is-invalid] = "exampleCallInvalid(i)"
+                                    >
+                                    <small *ngIf="exampleCallInvalid(i)" class="text-danger">
+                                        Debe ingresar una llamada
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleResult">Resultado</label>
-                                    <input type="text" class="form-control" id="exampleResult" placeholder="Ej. [10, [5, 4, 6], [7, 8, 9]]" formControlName="result">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="exampleResult" 
+                                        placeholder="Ej. [10, [5, 4, 6], [7, 8, 9]]" 
+                                        formControlName="result"
+                                        [class.is-invalid] = "exampleResultInvalid(i)"
+                                    >
+                                    <small *ngIf="exampleResultInvalid(i)" class="text-danger">
+                                        Debe ingresar una resultado para la llamada
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleComment">Comentarios</label>

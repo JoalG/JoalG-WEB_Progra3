@@ -58,6 +58,14 @@ export class FormExerciseComponent implements OnInit {
     return this.exerciseForm.get('details')?.invalid && this.exerciseForm.get('details')?.touched;
   }
 
+  exampleCallInvalid(i: number){
+    return this.examples.controls[i].get('call')?.invalid && this.examples.controls[i].get('call')?.touched;
+  }
+
+  exampleResultInvalid(i: number){
+    return this.examples.controls[i].get('result')?.invalid && this.examples.controls[i].get('result')?.touched;
+  }
+
   createExerciseForm(){
     if(this.exerciseCode !== "none"){
       // Se inserta con información
@@ -74,8 +82,8 @@ export class FormExerciseComponent implements OnInit {
         file: [''],
         examples: this.fb.array([
           this.fb.group({
-            call: [''],
-            result: [''],
+            call: ['', Validators.required],
+            result: ['', Validators.required],
             comment: ['']
           })
         ]),
@@ -113,8 +121,8 @@ export class FormExerciseComponent implements OnInit {
   addExample(){
     this.examples.push(
       this.fb.group({
-        call: [''],
-        result: [''],
+        call: ['', Validators.required],
+        result: ['', Validators.required],
         comment: ['']
       })
     )
