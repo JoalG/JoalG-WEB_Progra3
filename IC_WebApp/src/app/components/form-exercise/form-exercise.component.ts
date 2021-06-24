@@ -11,9 +11,8 @@ export class FormExerciseComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "none";
+  @Input() exerciseCode: string = "00061";
 
-  /*
   exercise: any = 
     {
       "call":"arbol (centro, hijoizquierdo, hijoderecho)",
@@ -65,7 +64,6 @@ export class FormExerciseComponent implements OnInit {
       "section":"Árboles",
       "details":"Realice una función que retorne una lista que simboliza un árbol, por lo que se conforma por hijo derecha e izquierdo y el valor que simboliza la raíz."
     }
-  */
 
   ngOnInit(): void {
     this.createExerciseForm();
@@ -144,9 +142,47 @@ export class FormExerciseComponent implements OnInit {
   }
 
   createExerciseForm(){
+    // If update
     if(this.exerciseCode !== "none"){
-      // Se inserta con información
-      // Habria que hacerle get al firebase con el exerciseCode
+      this.exerciseForm = this.fb.group({
+        call: [this.exercise.call, Validators.required],
+        level: [this.exercise.level, Validators.required],
+        name: [this.exercise.name, Validators.required],
+        section: [this.exercise.section, Validators.required],
+        details: [this.exercise.details, Validators.required],
+        file: [''], // hay que buscar el archivo en storage de firebase
+        examples: this.fb.array([]),
+        solution: this.fb.group({
+          inputs: this.fb.array([]),
+          outputs: this.fb.array([]),
+          code: [this.exercise.solution.code, Validators.required]
+        })
+      })
+      this.exercise.examples.forEach((element:any) => {
+        this.examples.push(
+          this.fb.group({
+            call: [element.call, Validators.required],
+            result: [element.result, Validators.required],
+            comment: [element.comment]
+          })
+        )
+      });
+      this.exercise.solution.inputs.forEach((element:any) => {
+        this.inputs.push(
+          this.fb.group({
+            name: [element.name, Validators.required],
+            type: [element.type, Validators.required]
+          })
+        )
+      });
+      this.exercise.solution.outputs.forEach((element:any) => {
+        this.outputs.push(
+          this.fb.group({
+            name: [element.name, Validators.required],
+            type: [element.type, Validators.required]
+          })
+        )
+      });
     }
     // Se crea el form vacio
     else{
