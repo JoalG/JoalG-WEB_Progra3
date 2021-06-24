@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyBttwfzN1QDhBtnj8IgmI0Jl1_KshwQKqM",
+    authDomain: "web-progra3.firebaseapp.com",
+    databaseURL: "https://web-progra3-default-rtdb.firebaseio.com",
+    projectId: "web-progra3",
+    storageBucket: "web-progra3.appspot.com",
+    messagingSenderId: "660885788766",
+    appId: "1:660885788766:web:1ce60a1b8701d6fc5b7ccf",
+    measurementId: "G-Z8J4NZC7BK"
+  }
 };
 
 /*
