@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Exercise } from 'src/app/models/exercise.model';
 
 @Component({
   selector: 'app-form-exercise',
@@ -13,7 +14,7 @@ export class FormExerciseComponent implements OnInit {
   exerciseForm!: FormGroup;
   @Input() exerciseCode: string = "00061";
 
-  exercise: any = 
+  exercise: Exercise = 
     {
       "call":"arbol (centro, hijoizquierdo, hijoderecho)",
       "creator":"Diego Mora",
@@ -158,7 +159,7 @@ export class FormExerciseComponent implements OnInit {
           code: [this.exercise.solution.code, Validators.required]
         })
       })
-      this.exercise.examples.forEach((element:any) => {
+      this.exercise.examples.forEach(element => {
         this.examples.push(
           this.fb.group({
             call: [element.call, Validators.required],
@@ -167,7 +168,7 @@ export class FormExerciseComponent implements OnInit {
           })
         )
       });
-      this.exercise.solution.inputs.forEach((element:any) => {
+      this.exercise.solution.inputs.forEach(element => {
         this.inputs.push(
           this.fb.group({
             name: [element.name, Validators.required],
@@ -175,7 +176,7 @@ export class FormExerciseComponent implements OnInit {
           })
         )
       });
-      this.exercise.solution.outputs.forEach((element:any) => {
+      this.exercise.solution.outputs.forEach(element => {
         this.outputs.push(
           this.fb.group({
             name: [element.name, Validators.required],
