@@ -12,7 +12,7 @@ export class FormExerciseComponent implements OnInit {
 
   exerciseForm!: FormGroup;
   @Input() exerciseCode: string = "none";
-  
+
 
   ngOnInit(): void {
     this.createExerciseForm();
@@ -61,6 +61,10 @@ export class FormExerciseComponent implements OnInit {
 
   get examples(){
     return <FormArray>this.exerciseForm.get('examples');
+  }
+
+  get solution(){
+    return <FormGroup>this.exerciseForm.get('solution');
   }
 
   get inputs(){
