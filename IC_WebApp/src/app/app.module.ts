@@ -12,6 +12,7 @@ import { DifficultyCardComponent } from './components/difficulty-card/difficulty
 import { SolveExerciseComponent } from './components/solve-exercise/solve-exercise.component';
 import { FormExerciseComponent } from './components/form-exercise/form-exercise.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HighlightModule
+    HighlightModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide: HIGHLIGHT_OPTIONS,
