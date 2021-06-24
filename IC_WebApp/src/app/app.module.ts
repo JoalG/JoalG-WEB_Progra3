@@ -11,6 +11,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { DifficultyCardComponent } from './components/difficulty-card/difficulty-card.component';
 import { SolveExerciseComponent } from './components/solve-exercise/solve-exercise.component';
 import { FormExerciseComponent } from './components/form-exercise/form-exercise.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormExerciseComponent } from './components/form-exercise/form-exercise.
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
