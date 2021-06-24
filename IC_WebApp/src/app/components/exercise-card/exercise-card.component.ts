@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Exercise } from 'src/app/models/exercise.model';
+
 
 @Component({
   selector: 'app-exercise-card',
@@ -7,20 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExerciseCardComponent implements OnInit {
 
-  name: string = "Arbol binario";
-  category: string = "Árboles"
-  author: string = "Diego Mora";
-  date: Date = new Date();
-  description: string = "Realice una función que retorne una lista que simboliza un árbol, por lo que se conforma por hijo derecha e izquierdo y el valor que simboliza la raíz. ";
-  difficulty: number = 3;
+  @Input() exercise!: Exercise;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  counter(i: number) {
-    return new Array(i);
+  counter(i: string, b:boolean) {
+   
+
+    return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
   }
 
 }

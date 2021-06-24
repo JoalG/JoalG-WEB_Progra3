@@ -1,16 +1,16 @@
-<div class="card mt-3 border-dark w-100">
-    <div class="card-header bg-muted">
+<div class="card  border-dark mt-3 h-100">
+    <div class="card-header">
         <div>
             <div class="row">
                 <div class="col-8">
-                    <h3>{{name}}</h3>
+                    <h3>{{exercise.name}}</h3>
                     <hr>
-                    <h6><span class="font-weight-bold">Categoría: </span> {{category}}</h6>
+                    <h6><span class="font-weight-bold">Categoría: </span> {{exercise.section}}</h6>
                 </div>
                 <div class="col-4">
                     <h5>
-                        <i *ngFor='let in of counter(difficulty)' class="fas fa-star text-warning "></i>
-                        <i *ngFor='let in of counter(5-difficulty)' class="fas fa-star"></i>
+                        <i *ngFor='let in of counter(exercise.level,true)' class="fas fa-star text-warning "></i>
+                        <i *ngFor='let in of counter(exercise.level,false)' class="fas fa-star"></i>
                     </h5>
                 </div>
             </div>
@@ -19,20 +19,23 @@
     <div class="card-body">
         <div class="row">
             <div class="col">
-                <h6><span class="font-weight-bold">Autor: </span> {{author}}</h6>
+                <h6><span class="font-weight-bold">Autor: </span> {{exercise.creator}}</h6>
             </div>
             <div class="col">
                 <h6>
-                    <span class="font-weight-bold">Creación: </span> {{date | date : 'dd/MM/yyyy'}}
+                    <span class="font-weight-bold">Creación: </span> {{exercise.created | date : 'dd/MM/yyyy'}}
                 </h6>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <h6 class="font-weight-bold">Descripción</h6>
-                <p>{{description}}</p>
+                <p class="d-inline">{{exercise.details | slice:0:250}}</p>
+                <p class="d-inline" *ngIf="exercise.details.length>250?true:false">...</p>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
         <div class="row text-center text-md-right">
             <div class="col">
                 <button type="button" class="btn btn-secondary mr-3 "><i class="fas fa-lg fa-external-link-square-alt"></i></button>
@@ -41,3 +44,4 @@
             </div>
         </div>
     </div>
+</div>
