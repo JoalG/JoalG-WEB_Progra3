@@ -9,23 +9,73 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="name">Nombre del ejercicio</label>
-                    <input type="text" class="form-control" id="name" placeholder="Ej. Árbol" formControlName="name">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="name" placeholder="Ej. Árbol" 
+                        formControlName="name"
+                        [class.is-invalid] = "nameInvalid"
+                    >
+                    <small *ngIf="nameInvalid" class="text-danger">
+                        Debe ingresar un nombre para el ejercicio
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="section">Categoría</label>
-                    <input type="text" class="form-control" id="section" placeholder="Ej. Árboles" formControlName="section">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="section" 
+                        placeholder="Ej. Árboles" 
+                        formControlName="section"
+                        [class.is-invalid] = "sectionInvalid"
+                    >
+                    <small *ngIf="sectionInvalid" class="text-danger">
+                        Debe ingresar una categoría para el ejercicio
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="level">Nivel de dificultad</label>
-                    <input type="number" class="form-control" id="level" placeholder="1-5" formControlName="level">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="level" 
+                        placeholder="1-5" 
+                        formControlName="level"
+                        [class.is-invalid] = "levelInvalid"
+                    >
+                    <small *ngIf="levelInvalid" class="text-danger">
+                        Debe ingresar una dificultad para el ejercicio
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="call">Llamada de la función</label>
-                    <input type="text" class="form-control" id="call" placeholder="Ej. arbol (centro, hijoizquierdo, hijoderecho)" formControlName="call">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="call" 
+                        placeholder="Ej. arbol (centro, hijoizquierdo, hijoderecho)" 
+                        formControlName="call"
+                        [class.is-invalid] = "callInvalid"
+                    >
+                    <small *ngIf="callInvalid" class="text-danger">
+                        Debe ingresar una llamada
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="details">Detalles</label>
-                    <textarea class="form-control" id="details" rows="3" placeholder="Ej. Realice una función que retorne una lista que simboliza un árbol..." formControlName="details"></textarea>
+                    <textarea 
+                        class="form-control" 
+                        id="details" 
+                        rows="3" 
+                        placeholder="Ej. Realice una función que retorne una lista que simboliza un árbol..." 
+                        formControlName="details"
+                        [class.is-invalid] = "detailsInvalid"
+                    >
+                    </textarea>
+                    <small *ngIf="detailsInvalid" class="text-danger">
+                        Debe ingresar una descripción para el ejercicio
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="file">Adjuntar archivo</label>

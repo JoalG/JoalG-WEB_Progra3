@@ -16,7 +16,46 @@ export class FormExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     this.createExerciseForm();
-    console.log(this.inputs.controls)
+  }
+
+  // Get for exerciseForm
+
+  get examples(){
+    return <FormArray>this.exerciseForm.get('examples');
+  }
+
+  get solution(){
+    return <FormGroup>this.exerciseForm.get('solution');
+  }
+
+  get inputs(){
+    return <FormArray>this.exerciseForm.get('solution')?.get('inputs');
+  }
+
+  get outputs(){
+    return <FormArray>this.exerciseForm.get('solution')?.get('outputs');
+  }
+
+  // Gets for validations
+
+  get callInvalid(){
+    return this.exerciseForm.get('call')?.invalid && this.exerciseForm.get('call')?.touched;
+  }
+
+  get levelInvalid(){
+    return this.exerciseForm.get('level')?.invalid && this.exerciseForm.get('level')?.touched;
+  }
+
+  get nameInvalid(){
+    return this.exerciseForm.get('name')?.invalid && this.exerciseForm.get('name')?.touched;
+  }
+
+  get sectionInvalid(){
+    return this.exerciseForm.get('section')?.invalid && this.exerciseForm.get('section')?.touched;
+  }
+
+  get detailsInvalid(){
+    return this.exerciseForm.get('details')?.invalid && this.exerciseForm.get('details')?.touched;
   }
 
   createExerciseForm(){
@@ -57,22 +96,6 @@ export class FormExerciseComponent implements OnInit {
         })
       })
     }
-  }
-
-  get examples(){
-    return <FormArray>this.exerciseForm.get('examples');
-  }
-
-  get solution(){
-    return <FormGroup>this.exerciseForm.get('solution');
-  }
-
-  get inputs(){
-    return <FormArray>this.exerciseForm.get('solution')?.get('inputs');
-  }
-
-  get outputs(){
-    return <FormArray>this.exerciseForm.get('solution')?.get('outputs');
   }
 
   getExampleGroup(i: number){
