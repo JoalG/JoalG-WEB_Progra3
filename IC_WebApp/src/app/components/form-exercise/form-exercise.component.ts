@@ -18,10 +18,10 @@ export class FormExerciseComponent implements OnInit {
   { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "-MczuMWa7aBqlnXo9XTg";
+  @Input() exerciseCode: string = "none";
 
   exercise!: Exercise;
-  /*
+    /*
     {
       "call":"arbol (centro, hijoizquierdo, hijoderecho)",
       "creator":"Diego Mora",
@@ -72,7 +72,7 @@ export class FormExerciseComponent implements OnInit {
       "section":"Árboles",
       "details":"Realice una función que retorne una lista que simboliza un árbol, por lo que se conforma por hijo derecha e izquierdo y el valor que simboliza la raíz."
     }
-  */ 
+    */
   ngOnInit(): void {
 
     this.createExerciseForm();
@@ -317,7 +317,7 @@ export class FormExerciseComponent implements OnInit {
     else{
       // save new exercise
       if(this.exerciseCode === "none"){
-        // POST
+        this.exerciseService.saveNewExercise(this.exercise);
       }
       // update exercise
       else{

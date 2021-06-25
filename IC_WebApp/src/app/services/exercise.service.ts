@@ -51,12 +51,12 @@ export class ExerciseService {
     })
     return promise;
   }
-  
+
   /*
   How to use getExercises in other components:
 
     exerciseService.getExercises.then((data)=>{
-      this.exercises = <Exercise[]>data;
+      this.exercises = data;
       // Code that uses this.exercises
       console.log(this.exercises);
     })
