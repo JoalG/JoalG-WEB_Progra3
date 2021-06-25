@@ -18,7 +18,7 @@ export class FormExerciseComponent implements OnInit {
   { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "-MczuMB1J2OzLtt2CwMT";
+  @Input() exerciseCode: string = "-MczuMWa7aBqlnXo9XTg";
 
   exercise!: Exercise;
   /*
@@ -74,23 +74,18 @@ export class FormExerciseComponent implements OnInit {
     }
   */ 
   ngOnInit(): void {
-    
+
     this.createExerciseForm();
 
-    let promise = new Promise((resolve,reject) =>{
-      this.exerciseService.getExerciseByKey(this.exerciseCode).once('value').then((snapshot) => {
-        resolve(snapshot.val());
-      });
-    });
+    if(this.exerciseCode !== "none"){
 
-    promise.then((data)=>{
-      this.exercise = <Exercise>data;
-      if(this.exerciseCode !== "none"){
+      this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
+        this.exercise = <Exercise>data;
         this.createFilledExerciseForm();
-      }
-      console.log(this.exercise)
-
-    })
+        console.log(this.exercise)
+  
+      }).catch((data)=>console.log(data))
+    }
   }
 
   // Get for exerciseForm
