@@ -18,6 +18,8 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     CategoryCardComponent,
     DifficultyCardComponent,
     SolveExerciseComponent,
-    FormExerciseComponent
+    FormExerciseComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
