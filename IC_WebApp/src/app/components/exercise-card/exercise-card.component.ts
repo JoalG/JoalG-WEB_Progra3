@@ -18,13 +18,8 @@ export class ExerciseCardComponent implements OnInit {
   }
 
   counter(i: string, b:boolean) {
-   
-
     return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
   }
-  picha(){
-    console.log("picha");
-    
-  }
+
 
 }
