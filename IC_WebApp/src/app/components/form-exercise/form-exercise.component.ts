@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Exercise } from 'src/app/models/exercise.model';
+import { ExerciseService } from 'src/app/services/exercise.service';
+
 
 @Component({
   selector: 'app-form-exercise',
@@ -9,12 +11,17 @@ import { Exercise } from 'src/app/models/exercise.model';
 })
 export class FormExerciseComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private exerciseService: ExerciseService
+  ) 
+  { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "00061";
+  @Input() exerciseCode: string = "-MczuMWa7aBqlnXo9XTg";
 
-  exercise: Exercise = 
+  exercise!: Exercise;
+  /*
     {
       "call":"arbol (centro, hijoizquierdo, hijoderecho)",
       "creator":"Diego Mora",
@@ -65,9 +72,20 @@ export class FormExerciseComponent implements OnInit {
       "section":"Árboles",
       "details":"Realice una función que retorne una lista que simboliza un árbol, por lo que se conforma por hijo derecha e izquierdo y el valor que simboliza la raíz."
     }
-
+  */ 
   ngOnInit(): void {
+
     this.createExerciseForm();
+
+    if(this.exerciseCode !== "none"){
+
+      this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
+        this.exercise = <Exercise>data;
+        this.createFilledExerciseForm();
+        console.log(this.exercise)
+  
+      }).catch((data)=>console.log(data))
+    }
   }
 
   // Get for exerciseForm
@@ -142,9 +160,8 @@ export class FormExerciseComponent implements OnInit {
     return this.outputs.controls[i].get('type')?.invalid && this.outputs.controls[i].get('type')?.touched;
   }
 
-  createExerciseForm(){
-    // If update
-    if(this.exerciseCode !== "none"){
+
+  createFilledExerciseForm(){
       this.exerciseForm = this.fb.group({
         call: [this.exercise.call, Validators.required],
         level: [this.exercise.level, Validators.required],
@@ -184,40 +201,39 @@ export class FormExerciseComponent implements OnInit {
           })
         )
       });
-    }
-    // Se crea el form vacio
-    else{
-      this.exerciseForm = this.fb.group({
-        call: ['', Validators.required],
-        level: ['', Validators.required],
-        name: ['', Validators.required],
-        section: ['', Validators.required],
-        details: ['', Validators.required],
-        file: [''],
-        examples: this.fb.array([
+  }
+
+  createExerciseForm(){
+    this.exerciseForm = this.fb.group({
+      call: ['', Validators.required],
+      level: ['', Validators.required],
+      name: ['', Validators.required],
+      section: ['', Validators.required],
+      details: ['', Validators.required],
+      file: [''],
+      examples: this.fb.array([
+        this.fb.group({
+          call: ['', Validators.required],
+          result: ['', Validators.required],
+          comment: ['']
+        })
+      ]),
+      solution: this.fb.group({
+        inputs: this.fb.array([
           this.fb.group({
-            call: ['', Validators.required],
-            result: ['', Validators.required],
-            comment: ['']
+            name: ['', Validators.required],
+            type: ['', Validators.required]
           })
         ]),
-        solution: this.fb.group({
-          inputs: this.fb.array([
-            this.fb.group({
-              name: ['', Validators.required],
-              type: ['', Validators.required]
-            })
-          ]),
-          outputs: this.fb.array([
-            this.fb.group({
-              name: ['', Validators.required],
-              type: ['', Validators.required]
-            })
-          ]),
-          code: ['', Validators.required]
-        })
+        outputs: this.fb.array([
+          this.fb.group({
+            name: ['', Validators.required],
+            type: ['', Validators.required]
+          })
+        ]),
+        code: ['', Validators.required]
       })
-    }
+    })
   }
 
   getExampleGroup(i: number){
@@ -305,7 +321,7 @@ export class FormExerciseComponent implements OnInit {
       }
       // update exercise
       else{
-        // PUT
+        //this.database.object('exercises').set(this.exerciseForm.value).then(response => {console.log(response)}, error => console.log(error))
       }
     }
   }
