@@ -7,58 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CategoryCardComponent implements OnInit {
 
-  categories: any[] = [
-    {
-      name: "POO",
-      amount: 30,
-      selected: false
-    },
-    {
-      name: "Matrices",
-      amount: 24,
-      selected: false
-    },
-    {
-      name: "Listas",
-      amount: 54,
-      selected: false
-    },
-    {
-      name: "Arboles",
-      amount: 15,
-      selected: false
-    },
-    {
-      name: "Matrices",
-      amount: 24,
-      selected: false
-    },
-    {
-      name: "Listas",
-      amount: 54,
-      selected: false
-    },
-    {
-      name: "Arboles",
-      amount: 15,
-      selected: false
-    },
-    {
-      name: "Matrices",
-      amount: 24,
-      selected: false
-    },
-    {
-      name: "Listas",
-      amount: 54,
-      selected: false
-    },
-    {
-      name: "Arboles",
-      amount: 15,
-      selected: false
-    }
-  ];
+  @Input() categories: any[] = [];
 
 
   hide: boolean = false;
@@ -69,10 +18,15 @@ export class CategoryCardComponent implements OnInit {
   }
   
   selectCategory(index:number){
-    this.categories.forEach(category => {
-      category.selected = false;
-    });
-    this.categories[index].selected=true;
+    if(this.categories[index].selected){
+      this.categories[index].selected=false;
+    }else{
+      this.categories.forEach(category => {
+        category.selected = false;
+      });
+      this.categories[index].selected=true;
+    }
+    
   }
 
 }

@@ -1,40 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-difficulty-card',
   templateUrl: './difficulty-card.component.html',
   styleUrls: ['./difficulty-card.component.css']
 })
+
 export class DifficultyCardComponent implements OnInit {
 
-  difficulties: any[] = [
-    {
-      level: 1,
-      amount: 30,
-      selected: false
-    },
-    {
-      level: 2,
-      amount: 20,
-      selected: false
-    },
-    {
-      level: 3,
-      amount: 30,
-      selected: false
-    },
-    {
-      level: 4,
-      amount: 30,
-      selected: false
-    },
-    {
-      level: 5,
-      amount: 30,
-      selected: false
-    },
-  ];
-
+  @Input() difficulties!: any[];
 
   hide: boolean = false;
 
@@ -44,14 +19,22 @@ export class DifficultyCardComponent implements OnInit {
   }
   
   selectCategory(index:number){
-    this.difficulties.forEach(category => {
-      category.selected = false;
-    });
-    this.difficulties[index].selected=true;
+    if(this.difficulties[index].selected){
+      this.difficulties[index].selected=false;
+    }else{
+      this.difficulties.forEach(category => {
+        category.selected = false;
+      });
+      this.difficulties[index].selected=true;
+    }
   }
 
-  counter(i: number) {
-    return new Array(i);
+  counter(i: string, b:boolean) {
+    return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
   }
 
 }
+function input() {
+  throw new Error('Function not implemented.');
+}
+
