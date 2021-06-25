@@ -13,7 +13,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignUpComponent implements OnInit {
 
-  user!: User;
   recordarme = false;
   signUpForm!: FormGroup;
 
@@ -70,7 +69,7 @@ export class SignUpComponent implements OnInit {
         Swal.close();
 
         if ( this.recordarme ) {
-          localStorage.setItem('email', this.user.email);
+          localStorage.setItem('email', this.signUpForm.get('email')?.value);
         }
 
         this.router.navigateByUrl('/home');
