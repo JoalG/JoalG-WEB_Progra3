@@ -14,7 +14,7 @@ export class ExerciseService {
   currentExercise!: Exercise;
 
 
-  getExerciseByKey(key: string){
+  async getExerciseByKey(key: string): Promise<any>{
     let promise = new Promise((resolve,reject) =>{
       this.rootRef.child(key).once('value').then((snapshot) => {
         if(snapshot.val() !== null){
