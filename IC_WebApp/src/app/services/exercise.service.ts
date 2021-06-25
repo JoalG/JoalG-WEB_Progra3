@@ -13,7 +13,17 @@ export class ExerciseService {
   currentExercise!: Exercise;
 
   getExerciseByKey(key: string){
-    return this.database.database.ref('/exercises').child(key);
+    let promise = new Promise((resolve,reject) =>{
+      this.database.database.ref('/exercises').child(key).once('value').then((snapshot) => {
+        if(snapshot.val() !== null){
+          resolve(snapshot.val());
+        }
+        else{
+          reject("Exercise not found")
+        }
+      });
+    });
+    return promise;
   }
 
   saveNewExercise(exercise: Exercise){
@@ -21,37 +31,31 @@ export class ExerciseService {
   }
 
   getExercises(){
-    return this.exercises = this.database.list('exercises');
+    let promise = new Promise((resolve,reject) =>{
+      this.database.list('exercises').snapshotChanges().subscribe(item => {
+        let exercisesAndKey: any = [];
+        item.forEach(element => {
+          let x = {
+            exercise : <Exercise>element.payload.toJSON(),
+            key: element.key
+          };
+          exercisesAndKey.push(x);
+        });
+        if(exercisesAndKey.length !== 0){
+          resolve(exercisesAndKey)
+        }
+        else{
+          reject(exercisesAndKey)
+        }
+      });
+    })
+    return promise;
   }
+  
   /*
   How to use getExercises in other components:
 
-    return this.exerciseService.getExercises()
-      .snapshotChanges().subscribe(item => {
-        this.exercises = [];
-        item.forEach(element => {
-          let x = element.payload.toJSON();
-          x["$key"] = element.key;
-          this.exercises.push(x as Exercise);
-        });
-        // Code that uses this.exercises
-      });
-
-
-  With promises:
-  
-    let exPromise = new Promise((resolve, reject)=>{
-      this.exerciseService.getExercises().snapshotChanges().subscribe(item => {
-        let exercises: Exercise[] = [];
-        item.forEach(element => {
-          let x = element.payload.toJSON();
-          exercises.push(x as Exercise);
-        });
-        resolve(exercises)
-      });
-    })
-
-    exPromise.then((data)=>{
+    exerciseService.getExercises.then((data)=>{
       this.exercises = <Exercise[]>data;
       // Code that uses this.exercises
       console.log(this.exercises);
