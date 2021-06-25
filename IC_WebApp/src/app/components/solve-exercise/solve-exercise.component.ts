@@ -104,4 +104,9 @@ export class SolveExerciseComponent implements OnInit {
       document.getElementById("solution")?.classList.remove("show");
    }
   
+   onCodeChanged(value: any) {
+      console.log('CODE', value);
+   }
+
+
 }

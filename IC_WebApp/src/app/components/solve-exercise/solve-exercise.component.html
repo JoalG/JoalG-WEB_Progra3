@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row py-3">
+    <div class="row mt-3">
         <div class="col text-right">
             <button type="button" class="btn btn-success" (click)="hide=!hide" data-toggle="collapse" data-target="#solution">
                 <h4 class="d-inline" *ngIf = "hide" data-toggle="collapse" data-target="#solution">
@@ -13,11 +13,12 @@
         </div>
     </div>
 
-    <div class="row">
+
+    <div class="row mt-4">
         <div class="col">
             <div id="solution" class="row collapse show">
                 <div class="col">
-                    <div id="solution-card" class="card border-dark mt-3">
+                    <div id="solution-card" class="card border-dark">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-4 border-left border-right">
@@ -26,8 +27,8 @@
                                             <h3>Entradas</h3>
                                             <h6 *ngFor="let input of exercise.solution.inputs">
                                                 <span class="h5 font-weight-bold">
-                                                        {{input.name}}
-                                                    </span>: {{input.type}}
+                                                            {{input.name}}
+                                                        </span>: {{input.type}}
                                             </h6>
                                         </div>
                                     </div>
@@ -37,8 +38,8 @@
                                             <h3>Salidas</h3>
                                             <h6 *ngFor="let output of exercise.solution.outputs">
                                                 <span class="h5 font-weight-bold">
-                                                        {{output.name}}
-                                                    </span> : {{output.type}}
+                                                            {{output.name}}
+                                                        </span> : {{output.type}}
                                             </h6>
                                         </div>
                                     </div>
@@ -55,7 +56,7 @@
                                         <div class="col">
                                             <div class="col">
                                                 <div style="height: 400px">
-                                                    <ngs-code-editor style="height: 100%" theme="vs" [codeModel]="solutionCodeModel" [readOnly]="true" [options]="options" (loaded)="hideSolution()">
+                                                    <ngs-code-editor style="height: 100%" theme="vs" [codeModel]="solutionCodeModel" [readOnly]="false" [options]="options" (loaded)=" hideSolution()" (valueChanged)="onCodeChanged($event)">
                                                     </ngs-code-editor>
                                                 </div>
 
@@ -74,12 +75,10 @@
         </div>
     </div>
 
-
-
-    <div class="row">
+    <div class="row" [ngClass]="hide?'':'mt-4'">
         <div class="col-lg-5">
 
-            <div class="card  border-dark mt-3 h-100">
+            <div class="card  border-dark h-100">
                 <div class="card-header ">
                     <div class="row">
                         <div class="col">
@@ -94,13 +93,13 @@
 
                     <div class="row">
                         <div class="col-8">
-                            <h2>{{exercise.name}}</h2>
+                            <h2 class="font-weight-bold">{{exercise.name}}</h2>
                             <h6><span class="font-weight-bold">Categoría: </span> {{exercise.section}}</h6>
                         </div>
                         <div class="col-4">
                             <h5>
-                                <i *ngFor='let in of counter(exercise.level,true)' class="fas fa-star text-warning "></i>
-                                <i *ngFor='let in of counter(exercise.level,false)' class="fas fa-star"></i>
+                                <i *ngFor='let in of counter(exercise.level,true)' class="fas fa-lg fa-star text-warning "></i>
+                                <i *ngFor='let in of counter(exercise.level,false)' class="fas fa-lg fa-star"></i>
                             </h5>
                         </div>
                     </div>
@@ -131,7 +130,7 @@
             </div>
         </div>
         <div class="col-lg-7">
-            <div class="card border-dark mt-3 h-100">
+            <div class="card border-dark h-100">
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
@@ -145,7 +144,7 @@
                     <div *ngFor="let example of exercise.examples" class="row">
                         <div class="col">
                             <h5 *ngIf="example.comment.length!=0">{{example.comment}}</h5>
-                            <h5 class="text-info">>>> {{example.call}}</h5>
+                            <h5 class="text-info font-weight-bold">>>> {{example.call}}</h5>
                             <h5 class="text-secondary">{{example.result}}</h5>
                             <br>
                             <br>
@@ -154,8 +153,10 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+
+
 
 
 </div>
