@@ -20,6 +20,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    AngularFireAuthModule    
+    AngularFireAuthModule,
+    HttpClientModule    
   ],
   providers: [{
     provide: HIGHLIGHT_OPTIONS,
