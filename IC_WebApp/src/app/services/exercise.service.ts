@@ -9,12 +9,14 @@ export class ExerciseService {
 
   exercises!: AngularFireList<any>;
   constructor(private database: AngularFireDatabase,) { }
+  rootRef = this.database.database.ref('/exercises');
 
   currentExercise!: Exercise;
 
+
   getExerciseByKey(key: string){
     let promise = new Promise((resolve,reject) =>{
-      this.database.database.ref('/exercises').child(key).once('value').then((snapshot) => {
+      this.rootRef.child(key).once('value').then((snapshot) => {
         if(snapshot.val() !== null){
           resolve(snapshot.val());
         }
@@ -27,7 +29,11 @@ export class ExerciseService {
   }
 
   saveNewExercise(exercise: Exercise){
-    this.database.database.ref('/exercises').push(exercise).then(response => {console.log(response)}, error => console.log(error));
+    this.rootRef.push(exercise).then(response => {console.log(response)}, error => console.log(error));
+  }
+
+  updateExercise(exercise: Exercise, key: string){
+    this.database.database.ref("exercises/"+ key).set(exercise).then(response => console.log("Sucess")).catch(err => console.log("Error"));
   }
 
   getExercises(){
