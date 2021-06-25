@@ -11,13 +11,13 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { DifficultyCardComponent } from './components/difficulty-card/difficulty-card.component';
 import { SolveExerciseComponent } from './components/solve-exercise/solve-exercise.component';
 import { FormExerciseComponent } from './components/form-exercise/form-exercise.component';
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { CodeEditorModule } from '@ngstack/code-editor';
 
 @NgModule({
   declarations: [
@@ -34,19 +34,14 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HighlightModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    AngularFireAuthModule    
+    AngularFireAuthModule,
+    CodeEditorModule.forRoot()  
   ],
-  providers: [{
-    provide: HIGHLIGHT_OPTIONS,
-    useValue: {
-      fullLibraryLoader: () => import('highlight.js'),
-    }
-  }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
