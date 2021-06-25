@@ -1,1 +1,149 @@
-<p>solve-exercise works!</p>
+<div class="container-fluid">
+    <div class="row py-3">
+        <div class="col-lg-5">
+
+            <div class="card  border-dark mt-3 h-100">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>Definición</h3>
+                        </div>
+                        <div class="col-2 text-right mt-1">
+                            <button type="button" class="btn btn-info mr-3 "><i class="fas fa-lg fa-file-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-8">
+                            <h2>{{exercise.name}}</h2>
+                            <h6><span class="font-weight-bold">Categoría: </span> {{exercise.section}}</h6>
+                        </div>
+                        <div class="col-4">
+                            <h5>
+                                <i *ngFor='let in of counter(exercise.level,true)' class="fas fa-star text-warning "></i>
+                                <i *ngFor='let in of counter(exercise.level,false)' class="fas fa-star"></i>
+                            </h5>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col">
+                            <h6><span class="font-weight-bold">Autor: </span> {{exercise.creator}}</h6>
+                        </div>
+                        <div class="col  text-right">
+                            <h6>
+                                <span class="font-weight-bold">Creación: </span> {{exercise.created | date : 'dd/MM/yyyy'}}
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row d-flex">
+                        <div class="col">
+                            <br>
+                            <h5 class="font-weight-bold">Descripción</h5>
+                            <p class="d-inline">{{exercise.details | slice:0:250}}</p>
+                            <p class="d-inline" *ngIf="exercise.details.length>250?true:false">...</p>
+
+                            <br><br>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="card border-dark mt-3 h-100">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+
+                            <h3>Ejemplos</h3>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let example of getExamples()" class="row">
+                        <div class="col">
+                            <h5>
+                                <pre><code [highlight]="example"></code></pre>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row py-3">
+        <div class="col">
+
+            <div id="solution-section" class="py-3">
+                <button type="button" class="btn btn-success" (click)="hide=!hide" data-toggle="collapse" data-target="#solution">
+                    <h4 class="d-inline" *ngIf = "hide" data-toggle="collapse" data-target="#solution">
+                        Mostrar Solución
+                    </h4>
+                    <h4 class="d-inline" *ngIf = "!hide" data-toggle="collapse" data-target="#solution">
+                        Ocultar Solución
+                    </h4>
+                    <i class="fas " [ngClass]="hide?'fa-chevron-down':'fa-chevron-up'"></i>
+                </button>
+                <div id="solution" class="collapse">
+                    <div id="solution-card" class="card border-dark mt-3">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 class="text-success">Entradas</h4>
+                                            <p *ngFor="let input of exercise.solution.inputs">
+                                                <span class="h6 font-weight-bold">
+                                                    {{input.name}}
+                                                </span>: {{input.type}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 class="text-success">Salidas</h4>
+                                            <p *ngFor="let output of exercise.solution.outputs">
+                                                <span class="h6 font-weight-bold">
+                                                    {{output.name}}
+                                                </span> : {{output.type}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8 border-left">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 class="text-success pl-1">Codigo</h4>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="col">
+                                                <h5>
+                                                    <pre><code [highlight]="exercise.solution.code"></code></pre>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
