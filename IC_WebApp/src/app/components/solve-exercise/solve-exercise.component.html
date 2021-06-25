@@ -43,7 +43,7 @@
                         <div class="col">
                             <br>
                             <h5 class="font-weight-bold">Descripción</h5>
-                            <p class="d-inline">{{exercise.details | slice:0:250}}</p>
+                            <p class="d-inline">{{exercise.details }}</p>
                             <p class="d-inline" *ngIf="exercise.details.length>250?true:false">...</p>
 
                             <br><br>
