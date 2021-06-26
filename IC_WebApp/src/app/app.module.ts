@@ -18,6 +18,7 @@ import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CodeEditorModule } from '@ngstack/code-editor';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CodeEditorModule } from '@ngstack/code-editor';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    CodeEditorModule.forRoot()  
+    CodeEditorModule.forRoot(),
+    NgxPaginationModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

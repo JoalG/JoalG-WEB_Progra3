@@ -4,8 +4,15 @@
     <hr>
     <app-difficulty-card [difficulties]="levels"></app-difficulty-card>
     <hr>
+
+
+    <pagination-controls class="text-right" [maxSize]="7" (pageChange)="page_number = $event"></pagination-controls>
+
+
+
+
     <div class="row">
-        <div *ngFor="let exercise of exercises" class="col-lg-4 col-md-6 py-3 ">
+        <div *ngFor="let exercise of exercises | paginate: { itemsPerPage: page_size, currentPage: page_number }" class="col-lg-4 col-md-6 py-3 ">
             <app-exercise-card [exercise]=exercise.exercise></app-exercise-card>
         </div>
     </div>

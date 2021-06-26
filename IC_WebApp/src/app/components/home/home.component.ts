@@ -14,11 +14,14 @@ export class HomeComponent implements OnInit {
    categories: any[] = [];
    levels: any[] = [];
 
+   page_number:number =1;
+   page_size:number =9;
+
    constructor(private exerciseService:ExerciseService) { }
 
    ngOnInit(): void {
          this.exerciseService.getExercises().then((data)=>{
-         this.exercises = <any[]>data;    
+         this.exercises = <any[]>data;  
          this.categories = this.getCategories();
          this.levels=this.getLevels();    
          console.log(this.categories);
