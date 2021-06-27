@@ -1,7 +1,7 @@
 <pagination-template class="d-inline" [maxSize]="7" #p="paginationApi" (pageChange)="page_number = $event">
 
     <div class="d-inline pagination-previous" [class.disabled]="p.isFirstPage()">
-        <div class=" d-inline px-2" (click)="p.previous(); cambio()">
+        <div class=" d-inline px-2" (click)="p.previous(); changePage()">
             <div class="btn" [ngClass]="!p.isFirstPage()?'btn btn-outline-dark':'btn btn-dark disabled'">
                 <i class="fas fa-chevron-left"></i>
             </div>
@@ -9,7 +9,7 @@
     </div>
 
     <div class=" d-inline" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-        <div class=" d-inline px-1" (click)="p.setCurrent(page.value);cambio();" *ngIf="p.getCurrent() !== page.value">
+        <div class=" d-inline px-1" (click)="p.setCurrent(page.value);changePage();" *ngIf="p.getCurrent() !== page.value">
             <div class="btn btn-outline-dark">
                 {{ page.label }}
             </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="d-inline pagination-next" [class.disabled]="p.isLastPage()">
-        <div class=" d-inline px-2" (click)="!p.isLastPage()?p.next():false;!p.isLastPage()?cambio():false;">
+        <div class=" d-inline px-2" (click)="!p.isLastPage()?p.next():false;!p.isLastPage()?changePage():false;">
             <div class="btn" [ngClass]="!p.isLastPage()?'btn btn-outline-dark':'btn btn-dark disabled'">
                 <i class="fas fa-chevron-right"></i>
             </div>

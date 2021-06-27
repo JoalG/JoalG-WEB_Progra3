@@ -8,15 +8,15 @@ import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 export class PaginationControlsComponent implements OnInit {
 
   @Input() page_number!:number;
-  @Output() cambioEvent = new EventEmitter();
+  @Output() change = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  cambio(){
-    this.cambioEvent.emit(this.page_number);
+  changePage(){
+    this.change.emit(this.page_number);
   }
 
 }
