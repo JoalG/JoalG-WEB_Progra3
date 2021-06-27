@@ -128,4 +128,8 @@ export class HomeComponent implements OnInit {
       document.getElementById(el)?.scrollIntoView({behavior:"smooth"});
    }
 
+   counter(i: string, b:boolean) {
+      return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
+    }
+
 }

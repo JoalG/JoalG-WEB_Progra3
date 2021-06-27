@@ -14,15 +14,25 @@
 
                 <div class="row">
                     <div class="col-lg-3 mt-2">
-                        <h4>
-                            Categoria: {{selectedSection.replace("all","Todas")}}
-                        </h4>
+                        <h5>
+                            Categoria:
+                        </h5>
+                        <h5>
+                            {{selectedSection.replace("all","Todas")}}
+                        </h5>
 
                     </div>
                     <div class="col-lg-3 mt-2">
-                        <h4>
-                            Dificultad: {{selectedLevel.replace("all","Todas")}}
-                        </h4>
+                        <h5>
+                            Dificultad:
+                        </h5>
+                        <h5 *ngIf="selectedLevel=='all'">
+                            Todas
+                        </h5>
+                        <h5 *ngIf="selectedLevel!='all'">
+                            <i *ngFor='let in of counter(selectedLevel,true)' class="fas fa-star text-warning "></i>
+                            <i *ngFor='let in of counter(selectedLevel,false)' class="fas fa-star"></i>
+                        </h5>
                     </div>
 
                     <div class="col-lg-6 mt-2">
