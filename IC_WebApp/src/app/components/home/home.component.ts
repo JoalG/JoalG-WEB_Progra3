@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+
 
 @Component({
   selector: 'app-home',
@@ -10,14 +10,16 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 export class HomeComponent implements OnInit {
 
 
-   filter:string="a";
+   filter:string="";
+   key:string="name";
+   reverse: boolean = false;
 
    exercises: any[] = [];
    sections: any[] = [];
    levels: any[] = [];
 
    page_number:number =1;
-   page_size:number = 9;
+   page_size:number = 5;
 
    selectedSection:string = "all";
    selectedLevel:string = "all";
@@ -34,7 +36,7 @@ export class HomeComponent implements OnInit {
          this.exercises = <any[]>data;  
          this.sections = this.getSections();
          this.levels=this.getLevels();     
-         console.log(this.exercises);
+         //console.log(this.exercises);
                  
       })
    }
@@ -46,7 +48,34 @@ export class HomeComponent implements OnInit {
       })  
       .filter((elem)=>{
          return this.selectedLevel=="all"? true:elem.exercise.level == this.selectedLevel;
-      })
+      });
+
+      console.log(res);
+      
+      
+      if(this.key=="created"){
+         res = res.sort((a, b) => {
+            if (!this.reverse) {
+               return <any>new Date(a.exercise[this.key]) - <any>new Date(b.exercise[this.key]);
+            }
+            return <any>new Date(b.exercise[this.key]) - <any>new Date(a.exercise[this.key]);
+         });
+      }
+
+      if(this.key=="name"){
+         
+         res = res.sort((a, b) => {
+            if (!this.reverse) {
+               return a.exercise.name < b.exercise.name ? -1 : 1;
+            }
+            return a.exercise.name > b.exercise.name ? -1 : 1;
+         });
+      }
+
+      
+
+      console.log(res);
+
       return res;  
    }
 
@@ -131,5 +160,14 @@ export class HomeComponent implements OnInit {
    counter(i: string, b:boolean) {
       return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
     }
+
+
+   sortBy(key: string){
+      this.key = key;
+   }
+
+   sortOrder(){
+      this.reverse = !this.reverse;
+   }
 
 }
