@@ -5,7 +5,7 @@
     </button>
 </h3>
 
-<div id="categories" class="collapse show">
+<div id="categories" class="collapse">
     <div *ngFor="let category of categories, index as i" class="d-inline">
         <button type="button" class="btn my-2 mr-2" [ngClass]="category.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectCategory(i)">
                 <h5 class="pt-1">
