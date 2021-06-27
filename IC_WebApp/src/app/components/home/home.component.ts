@@ -15,12 +15,16 @@ export class HomeComponent implements OnInit {
    levels: any[] = [];
 
    page_number:number =1;
-   page_size:number =9;
+   page_size:number = 9;
 
    constructor(private exerciseService:ExerciseService) { }
 
    ngOnInit(): void {
-         this.exerciseService.getExercises().then((data)=>{
+      this.getExercises();
+   }
+
+   getExercises(){
+      this.exerciseService.getExercises().then((data)=>{
          this.exercises = <any[]>data;  
          this.categories = this.getCategories();
          this.levels=this.getLevels();    
@@ -29,6 +33,7 @@ export class HomeComponent implements OnInit {
          
       })
    }
+
 
    getCategories(){
       let result = this.exercises
@@ -52,7 +57,7 @@ export class HomeComponent implements OnInit {
       .reduce((total,value)=>{
             total[value.level] = (total[value.level]||0)+1;
             return total;
-      },{});
+      },{"1":0,"2":0,"3":0,"4":0,"5":0});
       
       result = Object.keys(result).map((key)=>{
          return{level:key,amount:result[key],selected:false}
@@ -64,5 +69,9 @@ export class HomeComponent implements OnInit {
 
       return result;
    }
+
+   scroll(el: string) {
+      document.getElementById(el)?.scrollIntoView({behavior:"smooth"});
+  }
 
 }

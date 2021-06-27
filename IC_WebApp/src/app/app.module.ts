@@ -19,6 +19,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationControlsComponent } from './components/pagination-controls/pagination-controls.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CategoryCardComponent,
     DifficultyCardComponent,
     SolveExerciseComponent,
-    FormExerciseComponent
+    FormExerciseComponent,
+    PaginationControlsComponent
   ],
   imports: [
     BrowserModule,
