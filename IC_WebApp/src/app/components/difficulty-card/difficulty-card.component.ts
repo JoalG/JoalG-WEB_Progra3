@@ -12,7 +12,7 @@ export class DifficultyCardComponent implements OnInit {
   @Input() difficulties!: any[];
   @Output() change = new EventEmitter();
   
-  hide: boolean = true;
+  hide: boolean = false;
   selected:string = "all";
 
   constructor() { }

@@ -10,7 +10,7 @@ export class CategoryCardComponent implements OnInit {
   @Input() categories: any[] = [];
   @Output() change = new EventEmitter();
   
-  hide: boolean = true;
+  hide: boolean = false;
   selected:string = "all";
 
   constructor() { }
