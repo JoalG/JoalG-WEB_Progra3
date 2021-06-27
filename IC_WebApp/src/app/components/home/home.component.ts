@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
 
@@ -10,6 +10,8 @@ import { ExerciseService } from 'src/app/services/exercise.service';
 export class HomeComponent implements OnInit {
 
 
+   filter:string="a";
+
    exercises: any[] = [];
    sections: any[] = [];
    levels: any[] = [];
@@ -19,6 +21,7 @@ export class HomeComponent implements OnInit {
 
    selectedSection:string = "all";
    selectedLevel:string = "all";
+   
 
    constructor(private exerciseService:ExerciseService) { }
 

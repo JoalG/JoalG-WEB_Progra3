@@ -14,15 +14,11 @@
             <li class="nav-item active">
                 <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li>
-
-            </li>
 
         </ul>
-
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" [(ngModel)]="filter">
+            <button (click)="search()" class="btn btn-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>
 </nav>

@@ -11,7 +11,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { DifficultyCardComponent } from './components/difficulty-card/difficulty-card.component';
 import { SolveExerciseComponent } from './components/solve-exercise/solve-exercise.component';
 import { FormExerciseComponent } from './components/form-exercise/form-exercise.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
@@ -20,6 +20,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationControlsComponent } from './components/pagination-controls/pagination-controls.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,9 @@ import { PaginationControlsComponent } from './components/pagination-controls/pa
     AngularFireStorageModule,
     AngularFireAuthModule,
     CodeEditorModule.forRoot(),
-    NgxPaginationModule 
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
