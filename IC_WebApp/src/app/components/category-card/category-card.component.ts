@@ -29,7 +29,7 @@ export class CategoryCardComponent implements OnInit {
       this.categories[index].selected=true;
       this.selected = this.categories[index].name;
     }
-    
+    this.changeCategory();
   }
 
   changeCategory(){

@@ -2,9 +2,10 @@
     <hr>
     <app-category-card [categories]="categories" (change)="selectedCategory=$event"></app-category-card>
     <hr>
-    <app-difficulty-card [difficulties]="levels"></app-difficulty-card>
+    <app-difficulty-card [difficulties]="levels" (change)="selectedLevel=$event"></app-difficulty-card>
     <hr>
     <div id="exercises-row" class="py-3">
+
         <div class="text-right">
             <app-pagination-controls [page_number]="page_number" [id]="'exercises'" (change)="page_number=$event"></app-pagination-controls>
 

@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
    page_size:number = 9;
 
    selectedCategory:string = "all";
+   selectedLevel:string = "all";
 
    constructor(private exerciseService:ExerciseService) { }
 

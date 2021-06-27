@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
@@ -10,31 +10,39 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DifficultyCardComponent implements OnInit {
 
   @Input() difficulties!: any[];
-
+  @Output() change = new EventEmitter();
+  
   hide: boolean = true;
+  selected:string = "all";
 
   constructor() { }
 
   ngOnInit(): void {
   }
   
-  selectCategory(index:number){
+  selectDifficulty(index:number){
     if(this.difficulties[index].selected){
       this.difficulties[index].selected=false;
+      this.selected = "all";
     }else{
       this.difficulties.forEach(category => {
         category.selected = false;
       });
       this.difficulties[index].selected=true;
+      this.selected = this.difficulties[index].level;
     }
+    this.changeDifficulty();
   }
 
   counter(i: string, b:boolean) {
     return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
   }
 
+  changeDifficulty(){
+    this.change.emit(this.selected);
+  }
+
+
 }
-function input() {
-  throw new Error('Function not implemented.');
-}
+
 
