@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
 
 
    filter:string="";
-   key:string="name";
+   key:string="created";
    reverse: boolean = false;
 
    exercises: any[] = [];
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
    levels: any[] = [];
 
    page_number:number =1;
-   page_size:number = 5;
+   page_size:number = 10;
 
    selectedSection:string = "all";
    selectedLevel:string = "all";
@@ -56,9 +56,9 @@ export class HomeComponent implements OnInit {
       if(this.key=="created"){
          res = res.sort((a, b) => {
             if (!this.reverse) {
-               return <any>new Date(a.exercise[this.key]) - <any>new Date(b.exercise[this.key]);
+               return <any>new Date(b.exercise[this.key]) - <any>new Date(a.exercise[this.key]);
             }
-            return <any>new Date(b.exercise[this.key]) - <any>new Date(a.exercise[this.key]);
+            return <any>new Date(a.exercise[this.key]) - <any>new Date(b.exercise[this.key]);
          });
       }
 
@@ -164,10 +164,12 @@ export class HomeComponent implements OnInit {
 
    sortBy(key: string){
       this.key = key;
+      this.page_number=1;
    }
 
    sortOrder(){
       this.reverse = !this.reverse;
+      this.page_number=1;
    }
 
 }
