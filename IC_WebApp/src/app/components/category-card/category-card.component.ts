@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-category-card',
@@ -8,9 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CategoryCardComponent implements OnInit {
 
   @Input() categories: any[] = [];
-
-
+  @Output() change = new EventEmitter();
+  
   hide: boolean = true;
+  selected:string = "all";
 
   constructor() { }
 
@@ -20,13 +21,19 @@ export class CategoryCardComponent implements OnInit {
   selectCategory(index:number){
     if(this.categories[index].selected){
       this.categories[index].selected=false;
+      this.selected = "all";
     }else{
       this.categories.forEach(category => {
         category.selected = false;
       });
       this.categories[index].selected=true;
+      this.selected = this.categories[index].name;
     }
     
+  }
+
+  changeCategory(){
+    this.change.emit(this.selected);
   }
 
 }

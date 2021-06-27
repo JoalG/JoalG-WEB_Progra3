@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
    page_number:number =1;
    page_size:number = 9;
 
+   selectedCategory:string = "all";
+
    constructor(private exerciseService:ExerciseService) { }
 
    ngOnInit(): void {

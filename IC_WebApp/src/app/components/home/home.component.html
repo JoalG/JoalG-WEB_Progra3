@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <hr>
-    <app-category-card [categories]="categories"></app-category-card>
+    <app-category-card [categories]="categories" (change)="selectedCategory=$event"></app-category-card>
     <hr>
     <app-difficulty-card [difficulties]="levels"></app-difficulty-card>
     <hr>
