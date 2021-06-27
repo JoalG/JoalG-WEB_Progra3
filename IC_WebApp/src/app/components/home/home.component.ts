@@ -11,34 +11,42 @@ export class HomeComponent implements OnInit {
 
 
    exercises: any[] = [];
-   categories: any[] = [];
+   sections: any[] = [];
    levels: any[] = [];
 
    page_number:number =1;
    page_size:number = 9;
 
-   selectedCategory:string = "all";
+   selectedSection:string = "all";
    selectedLevel:string = "all";
 
    constructor(private exerciseService:ExerciseService) { }
 
    ngOnInit(): void {
-      this.getExercises();
+      this.getData();
    }
 
-   getExercises(){
+   getData(){
       this.exerciseService.getExercises().then((data)=>{
          this.exercises = <any[]>data;  
-         this.categories = this.getCategories();
-         this.levels=this.getLevels();    
-         console.log(this.categories);
-         console.log(this.levels);
-         
+         this.sections = this.getSections();
+         this.levels=this.getLevels();             
       })
    }
 
+   getExercises(){
+      let res:any[] = this.exercises
+      .filter((elem)=>{
+         return this.selectedSection=="all"? true:elem.exercise.section == this.selectedSection;
+      })  
+      .filter((elem)=>{
+         return this.selectedLevel=="all"? true:elem.exercise.level == this.selectedLevel;
+      })
+      return res;  
+   }
 
-   getCategories(){
+
+   getSections(){
       let result = this.exercises
       .map((item)=>(item.exercise))
       .reduce((total,value)=>{
