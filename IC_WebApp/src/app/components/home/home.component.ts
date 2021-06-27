@@ -109,6 +109,8 @@ export class HomeComponent implements OnInit {
       this.sections.forEach(element => {
          element.amount = result[element.name];
       });
+      this.page_number=1;
+
    }
 
   
@@ -150,6 +152,8 @@ export class HomeComponent implements OnInit {
       this.levels.forEach(element => {
          element.amount = result[element.level];
       });
+      this.page_number=1;
+
    }
 
 
