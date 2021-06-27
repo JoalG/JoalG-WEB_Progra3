@@ -1,9 +1,10 @@
 <div class="container-fluid">
     <hr>
-    <app-category-card [categories]="sections" (change)="selectedSection=$event"></app-category-card>
+    <app-category-card [categories]="sections" (change)="selectedSection=$event; updateLevels();"></app-category-card>
     <hr>
-    <app-difficulty-card [difficulties]="levels" (change)="selectedLevel=$event"></app-difficulty-card>
+    <app-difficulty-card [difficulties]="levels" (change)="selectedLevel=$event; updateSections();"></app-difficulty-card>
     <hr>
+
     <div id="exercises-row" class="py-3">
 
         <div class="text-right">

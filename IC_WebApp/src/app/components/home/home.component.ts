@@ -30,7 +30,9 @@ export class HomeComponent implements OnInit {
       this.exerciseService.getExercises().then((data)=>{
          this.exercises = <any[]>data;  
          this.sections = this.getSections();
-         this.levels=this.getLevels();             
+         this.levels=this.getLevels();     
+         console.log(this.exercises);
+                 
       })
    }
 
@@ -61,6 +63,22 @@ export class HomeComponent implements OnInit {
       return result;
    }
 
+   updateSections(){
+      let result = this.exercises
+      .map((item)=>(item.exercise))
+      .reduce((total,value)=>{
+         if (this.selectedLevel=="all") {
+            total[value.section] = (total[value.section]||0)+1;
+         } else {
+            total[value.section] = value.level==this.selectedLevel? (total[value.section]||0)+1: (total[value.section]||0);
+         }
+         return total;
+      },{});
+      this.sections.forEach(element => {
+         element.amount = result[element.name];
+      });
+   }
+
   
    getLevels(){
       let result = this.exercises
@@ -80,6 +98,28 @@ export class HomeComponent implements OnInit {
 
       return result;
    }
+
+
+   updateLevels(){
+      console.log(this.exercises
+         .map((item)=>(item.exercise)));
+      
+      let result = this.exercises
+      .map((item)=>(item.exercise))
+      .reduce((total,value)=>{
+         if (this.selectedSection=="all" || (value.section==this.selectedSection)) {
+            total[value.level] = (total[value.level]||0)+1;
+         } 
+         return total;
+         
+      },{"1":0,"2":0,"3":0,"4":0,"5":0});
+      console.log(result);
+
+      this.levels.forEach(element => {
+         element.amount = result[element.level];
+      });
+   }
+
 
    scroll(el: string) {
       document.getElementById(el)?.scrollIntoView({behavior:"smooth"});
