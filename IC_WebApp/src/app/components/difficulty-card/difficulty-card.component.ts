@@ -11,7 +11,7 @@ export class DifficultyCardComponent implements OnInit {
 
   @Input() difficulties!: any[];
 
-  hide: boolean = false;
+  hide: boolean = true;
 
   constructor() { }
 

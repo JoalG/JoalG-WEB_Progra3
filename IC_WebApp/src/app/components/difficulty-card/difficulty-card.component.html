@@ -1,11 +1,11 @@
 <h3>
-    Dificultad
+    Dificultades
     <button type="button" class="btn btn-light" (click)="hide=!hide" data-toggle="collapse" data-target="#difficulties">
         <i class="fas " [ngClass]="hide?'fa-chevron-down':'fa-chevron-up'"></i>
     </button>
 </h3>
 
-<div id="difficulties" class="collapse show">
+<div id="difficulties" class="collapse">
     <div *ngFor="let difficulty of difficulties, index as i" class="d-inline">
         <button type="button" class="btn my-2 mr-2" [ngClass]="difficulty.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectCategory(i)">              
             <h5 class="pt-1">
