@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -13,7 +15,9 @@ export class FormExerciseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private exerciseService: ExerciseService
+    private exerciseService: ExerciseService,
+    private userService: UserService,
+    private datePipe: DatePipe
   ) 
   { }
 
@@ -319,6 +323,12 @@ export class FormExerciseComponent implements OnInit {
     else{
       // save new exercise
       if(this.exerciseCode === "none"){
+        this.exercise = {
+          code: '',
+          creator: this.userService.readUsernameToken(),
+          created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
+          ...this.exerciseForm.value
+        }
         this.exerciseService.saveNewExercise(this.exercise);
       }
       // update exercise
@@ -330,7 +340,6 @@ export class FormExerciseComponent implements OnInit {
           ...this.exerciseForm.value
         }
         this.exerciseService.updateExercise(this.exercise, this.exerciseCode);
-        //this.database.object('exercises').set(this.exerciseForm.value).then(response => {console.log(response)}, error => console.log(error))
       }
     }
   }

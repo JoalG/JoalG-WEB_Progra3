@@ -21,6 +21,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -46,9 +47,11 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    HttpClientModule    
+    HttpClientModule,    
   ],
-  providers: [{
+  providers: [
+    DatePipe,
+    {
     provide: HIGHLIGHT_OPTIONS,
     useValue: {
       fullLibraryLoader: () => import('highlight.js'),

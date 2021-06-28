@@ -29,7 +29,13 @@ export class ExerciseService {
   }
 
   saveNewExercise(exercise: Exercise){
-    this.rootRef.push(exercise).then(response => {console.log(response)}, error => console.log(error));
+    this.rootRef.push(exercise)
+      .then(response => {
+        let key: string = response['key']!;
+        this.rootRef.child(key).child('code').set(key);
+        console.log(response)
+      }, 
+      error => console.log(error));
   }
 
   updateExercise(exercise: Exercise, key: string){
