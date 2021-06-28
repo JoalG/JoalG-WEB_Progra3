@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isInSession(){
-    return this.userService.estaAutenticado();    
+    return this.userService.leerToken() !== '';    
   }
 
   logOut(){

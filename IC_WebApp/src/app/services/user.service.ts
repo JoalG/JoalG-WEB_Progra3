@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { map } from 'rxjs/operators';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class UserService {
 
   //NOTE importante para tener el token, validarlo 
   userToken!: any;
+  userName!: any;
 
   // Crear nuevo usuario
   // https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=[API_KEY]
@@ -25,7 +27,7 @@ export class UserService {
 
 
   //NOTE: lo primero que hace el servicio es leerToken del localStorage
-  constructor( private http: HttpClient ) {
+  constructor( private http: HttpClient, private database: AngularFireDatabase, ) {
     this.leerToken();
   }
 
@@ -33,6 +35,7 @@ export class UserService {
   // ya en FE, se hace logout y se redirecciona a login component
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 
   // login llama al api de firebase
@@ -53,10 +56,28 @@ export class UserService {
     ).pipe(
       map( (resp:any) => {
         this.guardarToken( resp['idToken'] ); //guarda en LS
+        let userData;
+        this.getUserData(resp['localId']).then(res => {
+          userData = <User>res;
+          this.saveUsernameToken(userData.name);
+        }).catch(err => console.log(err));
         return resp;
       })
     ); 
-
+  }
+  
+  getUserData(uid: string){
+    let promise = new Promise((resolve,reject) =>{
+      this.database.database.ref('users').child(uid).once('value').then((snapshot) => {
+        if(snapshot.val() !== null){
+          resolve(snapshot.val());
+        }
+        else{
+          reject("Not found");
+        }
+      });
+    });
+    return promise;
   }
 
   // NOTE: usa el API para crear un usuario
@@ -71,13 +92,36 @@ export class UserService {
       authData
     ).pipe(
       map( (resp:any) => {
+        this.saveUserDB(usuario, resp['localId'])
         this.guardarToken( resp['idToken'] ); //al crearlo lo guarda en el LS
+        this.saveUsernameToken(usuario.name);
         return resp;
       })
     );
-
   }
 
+  saveUserDB(user: User, uid: string){
+    const _user = {
+      email: user.email,
+      name: user.name,
+    }
+    this.database.database.ref('users/' + uid).set(_user).then(res => {console.log("success")}).catch(err => {console.log("Error")});
+  }
+
+  saveUsernameToken(name: string){
+    this.userName = name;
+    localStorage.setItem('username',this.userName);
+  }
+
+  readUsernameToken(){
+    if(localStorage.getItem('username')){
+      this.userName = localStorage.getItem('username');
+    }
+    else{
+      this.userName = '';
+    }
+    return this.userName;
+  }
 
   //guarda el token y el tiempo en el LS
   // importante, esto es para simular el manejo del token, el 

@@ -8,7 +8,7 @@ import { Exercise } from '../models/exercise.model';
 export class ExerciseService {
 
   exercises!: AngularFireList<any>;
-  constructor(private database: AngularFireDatabase,) { }
+  constructor(private database: AngularFireDatabase) { }
   rootRef = this.database.database.ref('/exercises');
 
   currentExercise!: Exercise;
