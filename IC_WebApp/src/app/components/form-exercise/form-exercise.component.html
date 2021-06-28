@@ -78,10 +78,16 @@
                     </small>
                 </div>
                 <div class="form-group">
-                    <label for="file">Adjuntar archivo</label>
-                    <br>
-                    <input type="file" id="file" formControlName="file">
+                    <label class="custom-file-upload">
+                        <input type="file" id="file" (change)="setFile($event)" [class.is-invalid] = "fileInvalid()">
+                        <i class="fas fa-upload"></i> Subir archivo
+                    </label>
+                    <p>{{fileName}}</p>
                 </div>
+                <small *ngIf="fileInvalid()" class="text-danger">
+                    El archivo debe ser menor de 25 mb
+                </small>
+                <a href="{{fileURL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
             </div>
         </div>
         

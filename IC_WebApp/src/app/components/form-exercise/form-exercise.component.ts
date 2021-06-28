@@ -22,9 +22,13 @@ export class FormExerciseComponent implements OnInit {
   { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "none";
+  @Input() exerciseCode: string = "-MdJMGDDfO3XocoEdrxs";
   exercise!: Exercise;
-
+  file: any;
+  fileURL: any;
+  fileSizeLimit: number = 26214400;
+  fileName: string = 'Ningún Archivo';
+  fileURLExists: boolean = false;
   /*
   exercise: Exercise =
 
@@ -87,10 +91,22 @@ export class FormExerciseComponent implements OnInit {
 
       this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
         this.exercise = <Exercise>data;
+
         this.createFilledExerciseForm();
+
         console.log(this.exercise)
   
       }).catch((data)=>console.log(data))
+
+      this.exerciseService.getDownloadURL(this.exerciseCode).then((url)=>{
+        this.fileURL = url;
+        this.fileURLExists = true;
+        console.log(url);
+      }).catch(err =>{
+        this.fileURL = '';
+        this.fileURLExists = false;
+        console.log(err);
+      })
     }
   }
 
@@ -174,7 +190,6 @@ export class FormExerciseComponent implements OnInit {
         name: [this.exercise.name, Validators.required],
         section: [this.exercise.section, Validators.required],
         details: [this.exercise.details, Validators.required],
-        file: [''], // hay que buscar el archivo en storage de firebase
         examples: this.fb.array([]),
         solution: this.fb.group({
           inputs: this.fb.array([]),
@@ -216,7 +231,6 @@ export class FormExerciseComponent implements OnInit {
       name: ['', Validators.required],
       section: ['', Validators.required],
       details: ['', Validators.required],
-      file: [''],
       examples: this.fb.array([
         this.fb.group({
           call: ['', Validators.required],
@@ -295,7 +309,7 @@ export class FormExerciseComponent implements OnInit {
   }
 
   saveExercise(){
-    if(this.exerciseForm.invalid){
+    if(this.exerciseForm.invalid || this.fileInvalid()){
       Object.values(this.exerciseForm.controls).forEach(control =>{
 
         // If example
@@ -329,7 +343,7 @@ export class FormExerciseComponent implements OnInit {
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
         }
-        this.exerciseService.saveNewExercise(this.exercise);
+        this.exerciseService.saveNewExercise(this.exercise, this.file);
       }
       // update exercise
       else{
@@ -339,8 +353,29 @@ export class FormExerciseComponent implements OnInit {
           creator: this.exercise.creator,
           ...this.exerciseForm.value
         }
-        this.exerciseService.updateExercise(this.exercise, this.exerciseCode);
+        this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file);
       }
     }
   }
+
+  setFile($event:any){
+
+    this.file = $event.target.files[0];
+
+    if(typeof this.file === 'undefined'){
+      this.fileName = 'Nigún archivo'
+    }
+    else{
+      this.fileName = this.file.name;
+    }
+    console.log(this.file);
+  }
+
+  fileInvalid(){
+    if(typeof this.file !== 'undefined'){
+      return this.file.size > this.fileSizeLimit;
+    }
+    return false;
+  }
+
 }
