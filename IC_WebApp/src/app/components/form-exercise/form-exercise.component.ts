@@ -22,7 +22,7 @@ export class FormExerciseComponent implements OnInit {
   { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "-MdJMGDDfO3XocoEdrxs";
+  @Input() exerciseCode: string = "none";
   exercise!: Exercise;
   file: any;
   fileURL: any;

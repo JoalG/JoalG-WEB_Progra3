@@ -8,12 +8,39 @@
     padding-right: 15%;
 }
 
+input{
+    background-color: white;
+    border-color: dimgray;
+}
+
 input[type="file"] {
     display: none;
 }
+
+textarea{
+    border-color: dimgray;
+}
+
 .custom-file-upload {
-    border: 1px solid #ccc;
+    background-color: white;
+    border: 1px solid dimgray;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
 }
+
+label{
+    font-size: large;
+    font-weight: bold;
+}
+
+.card{
+    border-color: black;
+}
+
+.card{
+    -webkit-box-shadow: -1px 9px 15px -12px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 9px 15px -12px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 9px 15px -12px rgba(0, 0, 0, 0.75);
+}
+

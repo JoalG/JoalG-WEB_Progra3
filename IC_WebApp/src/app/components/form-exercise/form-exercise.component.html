@@ -2,11 +2,11 @@
     <h1>Nuevo Ejercicio</h1>
     <hr>
     <form [formGroup]="exerciseForm" (ngSubmit)="saveExercise()">
-        <div class="card mx-md-5">
-            <div class="card-header">
-                <h2>Información General</h2>
+        <div class="card mx-md-5 card-shadow">
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Información General</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <div class="form-group">
                     <label for="name">Nombre del ejercicio</label>
                     <input 
@@ -94,13 +94,13 @@
         <hr>
         
         <div class="card mx-md-5">
-            <div class="card-header">
-                <h2>Ejemplos</h2>
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Ejemplos</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <div class="row">
                     <div class="col-md-6 mt-3" *ngFor="let controlGroup of examples.controls; let i = index">
-                        <div class="card">
+                        <div class="card card-shadow">
                             <div class="card-body" [formGroup]="getExampleGroup(i)">
                                 <div class="form-group">
                                     <label for="exampleCall">Llamada</label>
@@ -150,15 +150,15 @@
         <hr>
 
         <div class="card mx-md-5">
-            <div class="card-header">
-                <h2>Solución</h2>
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Solución</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <h4>Entradas</h4>
                 <div class="row">
                     <div class="col-md-6 mt-3" *ngFor="let controlGroup of inputs.controls; let i = index">
-                        <div class="card">
-                            <div class="card-body" [formGroup]="getInputGroup(i)">
+                        <div class="card card-shadow">
+                            <div class="card-body " [formGroup]="getInputGroup(i)">
                                 <div class="form-group">
                                     <label for="inputName">Nombre</label>
                                     <input 
@@ -203,7 +203,7 @@
                 <h4>Salidas</h4>
                 <div class="row">
                     <div class="col-md-6 mt-3" *ngFor="let controlGroup of outputs.controls; let i = index">
-                        <div class="card">
+                        <div class="card card-shadow">
                             <div class="card-body" [formGroup]="getOutputGroup(i)">
                                 <div class="form-group">
                                     <label for="outputName">Nombre</label>
