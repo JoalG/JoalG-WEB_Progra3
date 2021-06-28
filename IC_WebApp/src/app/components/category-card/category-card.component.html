@@ -6,12 +6,12 @@
 </h3>
 
 <div id="categories" class="collapse show">
-    <div *ngFor="let category of categories, index as i" class="d-inline">
+    <div *ngFor="let category of categories, index as i" class="d-inline  d-xl-block">
         <button type="button" class="btn my-2 mr-2" [ngClass]="category.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectCategory(i)">
-                <h5>
+                <h6 class="pt-1">
                     {{category.name}} 
                     <span class="badge" [ngClass]="category.selected? 'badge-light': 'badge-dark'">{{category.amount}}</span>
-                </h5> 
+                </h6> 
         </button>
     </div>
 </div>

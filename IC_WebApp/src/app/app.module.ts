@@ -11,8 +11,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { DifficultyCardComponent } from './components/difficulty-card/difficulty-card.component';
 import { SolveExerciseComponent } from './components/solve-exercise/solve-exercise.component';
 import { FormExerciseComponent } from './components/form-exercise/form-exercise.component';
-import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
@@ -22,6 +21,11 @@ import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { CodeEditorModule } from '@ngstack/code-editor';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationControlsComponent } from './components/pagination-controls/pagination-controls.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 
 @NgModule({
@@ -35,17 +39,24 @@ import { DatePipe } from '@angular/common';
     DifficultyCardComponent,
     SolveExerciseComponent,
     FormExerciseComponent,
+    PaginationControlsComponent
+    FormExerciseComponent,
     LoginComponent,
     SignUpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HighlightModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    AngularFireAuthModule,
+    CodeEditorModule.forRoot(),
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    FormsModule
     AngularFireAuthModule,
     HttpClientModule,    
   ],

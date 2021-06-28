@@ -11,7 +11,7 @@ export interface Exercise{
     details:string;
 }
 
-interface Example{
+export interface Example{
     call:string;
     result:string;
     comment:string
