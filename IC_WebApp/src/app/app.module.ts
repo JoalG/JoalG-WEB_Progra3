@@ -11,13 +11,17 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { DifficultyCardComponent } from './components/difficulty-card/difficulty-card.component';
 import { SolveExerciseComponent } from './components/solve-exercise/solve-exercise.component';
 import { FormExerciseComponent } from './components/form-exercise/form-exercise.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { CodeEditorModule } from '@ngstack/code-editor';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationControlsComponent } from './components/pagination-controls/pagination-controls.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,8 @@ import { CodeEditorModule } from '@ngstack/code-editor';
     CategoryCardComponent,
     DifficultyCardComponent,
     SolveExerciseComponent,
-    FormExerciseComponent
+    FormExerciseComponent,
+    PaginationControlsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,11 @@ import { CodeEditorModule } from '@ngstack/code-editor';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    CodeEditorModule.forRoot()  
+    CodeEditorModule.forRoot(),
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

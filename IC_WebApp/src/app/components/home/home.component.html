@@ -1,13 +1,90 @@
-<div class="container-fluid">
-    <hr>
-    <app-category-card></app-category-card>
-    <hr>
-    <app-difficulty-card></app-difficulty-card>
-    <hr>
-    <div class="row">
-        <div *ngFor="let exercise of exercises" class="col-md-4 col-12 py-3 ">
-            <app-exercise-card [exercise]=exercise></app-exercise-card>
+<div id="exercises-row" class="container-fluid">
+
+    <div class="row px-2 py-4">
+        <div class="col-xl-3">
+
+            <app-category-card [categories]="sections" (change)="selectedSection=$event; updateLevels();"></app-category-card>
+            <hr>
+            <app-difficulty-card [difficulties]="levels" (change)="selectedLevel=$event; updateSections();"></app-difficulty-card>
+            <hr>
+        </div>
+        <div class="col-xl-9">
+            <div>
+
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <h5>
+                            Categoria:
+                        </h5>
+                        <h5>
+                            {{selectedSection.replace("all","Todas")}}
+                        </h5>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <h5>
+                            Dificultad:
+                        </h5>
+                        <h5 *ngIf="selectedLevel=='all'">
+                            Todas
+                        </h5>
+                        <h5 *ngIf="selectedLevel!='all'">
+                            <i *ngFor='let in of counter(selectedLevel,true)' class="fas fa-star text-warning "></i>
+                            <i *ngFor='let in of counter(selectedLevel,false)' class="fas fa-star"></i>
+                        </h5>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-dark my-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span *ngIf="key=='name'">
+                                    Nombre
+                                </span>
+                                <span *ngIf="key=='created'">
+                                    Fecha
+                                </span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="sortBy('created')">
+                                    <h6>
+                                        Fecha de creación
+                                    </h6>
+                                </a>
+                                <a class="dropdown-item" (click)="sortBy('name')">
+                                    <h6>
+                                        Nombre
+                                    </h6>
+                                </a>
+                            </div>
+                            <button type="button" class="btn btn-outline-secondary my-1" (click)="sortOrder()">
+                                <i class="fas " [ngClass]="!reverse?'fa-chevron-down':'fa-chevron-up'"></i>
+                                </button>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6 text-center text-lg-right">
+                        <app-pagination-controls [page_number]="page_number" [id]="'exercises'" (change)="page_number=$event"></app-pagination-controls>
+
+                    </div>
+
+                </div>
+
+                <div class="row py-3">
+                    <div *ngFor="let exercise of getExercises() | filter:filter | paginate: { itemsPerPage: page_size, currentPage: page_number }" class="col-md-6 py-3 ">
+                        <app-exercise-card [exercise]=exercise.exercise></app-exercise-card>
+                    </div>
+                </div>
+
+                <div class="text-center text-lg-right">
+                    <app-pagination-controls (click)="scroll('exercises-row')" [page_number]="page_number" [id]="'exercises'" (change)="page_number=$event"></app-pagination-controls>
+
+                </div>
+            </div>
         </div>
     </div>
     <hr>
+
 </div>
