@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -13,15 +15,23 @@ export class FormExerciseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private exerciseService: ExerciseService
+    private exerciseService: ExerciseService,
+    private userService: UserService,
+    private datePipe: DatePipe
   ) 
   { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "-MczuMWa7aBqlnXo9XTg";
-
+  @Input() exerciseCode: string = "none";
   exercise!: Exercise;
+  file: any;
+  fileURL: any;
+  fileSizeLimit: number = 26214400;
+  fileName: string = 'Ningún Archivo';
+  fileURLExists: boolean = false;
   /*
+  exercise: Exercise =
+
     {
       "call":"arbol (centro, hijoizquierdo, hijoderecho)",
       "creator":"Diego Mora",
@@ -72,19 +82,31 @@ export class FormExerciseComponent implements OnInit {
       "section":"Árboles",
       "details":"Realice una función que retorne una lista que simboliza un árbol, por lo que se conforma por hijo derecha e izquierdo y el valor que simboliza la raíz."
     }
-  */ 
-  ngOnInit(): void {
+  */
 
+  ngOnInit(): void {
     this.createExerciseForm();
 
     if(this.exerciseCode !== "none"){
 
       this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
         this.exercise = <Exercise>data;
+
         this.createFilledExerciseForm();
+
         console.log(this.exercise)
   
       }).catch((data)=>console.log(data))
+
+      this.exerciseService.getDownloadURL(this.exerciseCode).then((url)=>{
+        this.fileURL = url;
+        this.fileURLExists = true;
+        console.log(url);
+      }).catch(err =>{
+        this.fileURL = '';
+        this.fileURLExists = false;
+        console.log(err);
+      })
     }
   }
 
@@ -168,7 +190,6 @@ export class FormExerciseComponent implements OnInit {
         name: [this.exercise.name, Validators.required],
         section: [this.exercise.section, Validators.required],
         details: [this.exercise.details, Validators.required],
-        file: [''], // hay que buscar el archivo en storage de firebase
         examples: this.fb.array([]),
         solution: this.fb.group({
           inputs: this.fb.array([]),
@@ -210,7 +231,6 @@ export class FormExerciseComponent implements OnInit {
       name: ['', Validators.required],
       section: ['', Validators.required],
       details: ['', Validators.required],
-      file: [''],
       examples: this.fb.array([
         this.fb.group({
           call: ['', Validators.required],
@@ -289,7 +309,7 @@ export class FormExerciseComponent implements OnInit {
   }
 
   saveExercise(){
-    if(this.exerciseForm.invalid){
+    if(this.exerciseForm.invalid || this.fileInvalid()){
       Object.values(this.exerciseForm.controls).forEach(control =>{
 
         // If example
@@ -317,12 +337,45 @@ export class FormExerciseComponent implements OnInit {
     else{
       // save new exercise
       if(this.exerciseCode === "none"){
-        // POST
+        this.exercise = {
+          code: '',
+          creator: this.userService.readUsernameToken(),
+          created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
+          ...this.exerciseForm.value
+        }
+        this.exerciseService.saveNewExercise(this.exercise, this.file);
       }
       // update exercise
       else{
-        //this.database.object('exercises').set(this.exerciseForm.value).then(response => {console.log(response)}, error => console.log(error))
+        this.exercise = {
+          code: this.exercise.code,
+          created: this.exercise.created,
+          creator: this.exercise.creator,
+          ...this.exerciseForm.value
+        }
+        this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file);
       }
     }
   }
+
+  setFile($event:any){
+
+    this.file = $event.target.files[0];
+
+    if(typeof this.file === 'undefined'){
+      this.fileName = 'Nigún archivo'
+    }
+    else{
+      this.fileName = this.file.name;
+    }
+    console.log(this.file);
+  }
+
+  fileInvalid(){
+    if(typeof this.file !== 'undefined'){
+      return this.file.size > this.fileSizeLimit;
+    }
+    return false;
+  }
+
 }

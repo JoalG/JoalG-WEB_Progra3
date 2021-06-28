@@ -19,6 +19,7 @@
             </li>
 
         </ul>
+        <button type="button" [routerLink]="['/home']" class="btn logout" *ngIf="isInSession()" (click)="logOut()"><i class="fas fa-3x fa-sign-out-alt"></i></button>
     </div>
     <div class="d-none w-75 d-lg-inline">
         <div class="input-group w-100">

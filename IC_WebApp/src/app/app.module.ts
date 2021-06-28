@@ -17,11 +17,16 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireDatabaseModule } from "@angular/fire/database";
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationControlsComponent } from './components/pagination-controls/pagination-controls.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +39,10 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     DifficultyCardComponent,
     SolveExerciseComponent,
     FormExerciseComponent,
-    PaginationControlsComponent
+    PaginationControlsComponent,
+    FormExerciseComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +56,13 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     Ng2OrderModule,
-    FormsModule
+    FormsModule,
+    AngularFireAuthModule,
+    HttpClientModule,    
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

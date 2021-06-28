@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
@@ -13,7 +14,7 @@ export class NavbarComponent implements OnInit {
 
  
 
-  constructor(private searchService: SearchService,private router: Router) { }
+  constructor(private searchService: SearchService,private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -21,6 +22,13 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  isInSession(){
+    return this.userService.leerToken() !== '';    
+  }
+
+  logOut(){
+    this.userService.logout();
+  }
   search(){
     this.searchService.changeData(this.filter);  //invoke new Data
     this.router.navigate(['/home']);
