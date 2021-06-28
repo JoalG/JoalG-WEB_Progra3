@@ -39,7 +39,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     DifficultyCardComponent,
     SolveExerciseComponent,
     FormExerciseComponent,
-    PaginationControlsComponent
+    PaginationControlsComponent,
     FormExerciseComponent,
     LoginComponent,
     SignUpComponent
@@ -56,18 +56,13 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     NgxPaginationModule,
     Ng2SearchPipeModule,
     Ng2OrderModule,
-    FormsModule
+    FormsModule,
     AngularFireAuthModule,
     HttpClientModule,    
   ],
   providers: [
-    DatePipe,
-    {
-    provide: HIGHLIGHT_OPTIONS,
-    useValue: {
-      fullLibraryLoader: () => import('highlight.js'),
-    }
-  }],
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

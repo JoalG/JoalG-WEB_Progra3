@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
