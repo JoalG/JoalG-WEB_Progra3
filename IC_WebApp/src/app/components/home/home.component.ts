@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { SearchService } from 'src/app/services/search.service';
 
 
 @Component({
@@ -25,10 +26,12 @@ export class HomeComponent implements OnInit {
    selectedLevel:string = "all";
    
 
-   constructor(private exerciseService:ExerciseService) { }
+   constructor(private exerciseService:ExerciseService,private searchService: SearchService) { }
 
    ngOnInit(): void {
       this.getData();
+      this.searchService.data$.subscribe(res => this.filter = res)
+
    }
 
    getData(){
