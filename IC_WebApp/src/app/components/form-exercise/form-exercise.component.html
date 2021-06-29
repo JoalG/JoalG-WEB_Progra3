@@ -87,7 +87,7 @@
                 <small *ngIf="fileInvalid()" class="text-danger">
                     El archivo debe ser menor de 25 mb
                 </small>
-                <a href="{{fileURL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
+                <a href="{{fileInfo.URL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
             </div>
         </div>
         

@@ -5,6 +5,8 @@ import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { UserService } from 'src/app/services/user.service';
 import { CodeEditorModule, CodeModel } from '@ngstack/code-editor';
+import { FileInfo } from 'src/app/models/file-info.model';
+import { FileService } from 'src/app/services/file.service';
 
 
 @Component({
@@ -18,7 +20,8 @@ export class FormExerciseComponent implements OnInit {
     private fb: FormBuilder,
     private exerciseService: ExerciseService,
     private userService: UserService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private fileService: FileService
   ) 
   { }
 
@@ -30,6 +33,7 @@ export class FormExerciseComponent implements OnInit {
   fileSizeLimit: number = 26214400;
   fileName: string = 'Ningún Archivo';
   fileURLExists: boolean = false;
+  fileInfo!: FileInfo;
 
   solutionCodeModel: CodeModel = {
     language: 'python',
@@ -123,14 +127,19 @@ export class FormExerciseComponent implements OnInit {
   
       }).catch((data)=>console.log(data))
 
-      this.exerciseService.getDownloadURL(this.exerciseCode).then((url)=>{
-        this.fileURL = url;
+
+      this.fileService.getFileInfo(this.exerciseCode)
+      .then((data) =>{
+        this.fileInfo = <FileInfo>data
         this.fileURLExists = true;
-        console.log(url);
-      }).catch(err =>{
-        this.fileURL = '';
+      })
+      .catch(err =>{
+        this.fileInfo = {
+          name: '',
+          URL: '',
+          path: ''
+        }
         this.fileURLExists = false;
-        console.log(err);
       })
     }
   }
@@ -368,7 +377,7 @@ export class FormExerciseComponent implements OnInit {
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
         }
-        this.exerciseService.saveNewExercise(this.exercise, this.file);
+        this.exerciseService.saveNewExercise(this.exercise, this.file, this.fileInfo);
       }
       // update exercise
       else{
@@ -378,7 +387,7 @@ export class FormExerciseComponent implements OnInit {
           creator: this.exercise.creator,
           ...this.exerciseForm.value
         }
-        this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file);
+        this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file, this.fileInfo);
       }
     }
   }
