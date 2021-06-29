@@ -33,21 +33,26 @@ export class DifficultyService {
 
   updateDifficulty(newValue: number, key: string){
 
-    this.getDifficulty(key).then(data =>{
-      let difficulty = <Difficulty>data;
-      let newAverage = ((difficulty.average * difficulty.numOfVotes) + newValue) / (difficulty.numOfVotes + 1)
+    let promise = new Promise((resolve,reject) =>{
+      this.getDifficulty(key).then(data =>{
+        let difficulty = <Difficulty>data;
+        let newAverage = ((difficulty.average * difficulty.numOfVotes) + newValue) / (difficulty.numOfVotes + 1)
+  
+        this.rootRef.child(key).set({
+          average: newAverage,
+          numOfVotes: difficulty.numOfVotes + 1
+        })
+        .then(()=>{
+          resolve(newAverage)
+        })
+        .catch(err => {
+          reject(err)
+        })
+      })
+    });
+    return promise;
 
-      this.rootRef.child(key).set({
-        average: newAverage,
-        numOfVotes: difficulty.numOfVotes + 1
-      })
-      .then(()=>{
-        console.log("Success")
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    })
+
   }
 
   getDifficulty(key: string){

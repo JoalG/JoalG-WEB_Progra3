@@ -137,5 +137,10 @@ export class ExerciseService {
     })
 
   */  
+  updateDifficultyLevel(newValue: number, key: string){
+    this.difficultyService.updateDifficulty(newValue, key).then(newAverage =>{
+      this.rootRef.child(key).child('level').set(newAverage);
+    })
+  }
 
 }

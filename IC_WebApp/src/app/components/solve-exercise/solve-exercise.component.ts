@@ -4,6 +4,7 @@ import { CodeEditorModule, CodeModel } from '@ngstack/code-editor';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/services/file.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-solve-exercise',
@@ -17,6 +18,7 @@ export class SolveExerciseComponent implements OnInit {
    exerciseCode: string = "";
    exercise!: Exercise;
    fileURL: string = '';
+   difficulty!: FormGroup;
 
    hide:boolean = true;
    
@@ -43,7 +45,8 @@ export class SolveExerciseComponent implements OnInit {
    constructor(
       private exerciseService: ExerciseService,
       private route: ActivatedRoute,
-      private fileService: FileService
+      private fileService: FileService,
+      private fb: FormBuilder
    ) { 
       try {
          this.exerciseCode = <string>this.route.snapshot.paramMap.get('code');
@@ -67,11 +70,11 @@ export class SolveExerciseComponent implements OnInit {
          this.exercise = <Exercise>data;
          console.log(this.exercise);
          this.solutionCodeModel.value = this.exercise.solution.code;
-         this.isDataLoaded = true;
-  
+         this.difficulty = this.fb.group({
+            level: this.exercise.level
+         })
+         this.isDataLoaded = true;  
       }).catch((data)=>console.log(data));
-
- 
    }
 
    counter(i: string, b:boolean) {
@@ -108,4 +111,8 @@ export class SolveExerciseComponent implements OnInit {
       link.remove();
   }
 
+  setDifficulty(){
+     this.exerciseService.updateDifficultyLevel(this.difficulty.get('level')?.value, this.exercise.code);
+     console.log(this.difficulty.value)
+  }
 }
