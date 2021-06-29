@@ -33,6 +33,7 @@ export class FormExerciseComponent implements OnInit {
   fileSizeLimit: number = 26214400;
   fileName: string = 'Ningún Archivo';
   fileURLExists: boolean = false;
+  isDataLoaded:boolean = false;
   /*
   exercise: Exercise =
 
@@ -97,7 +98,7 @@ export class FormExerciseComponent implements OnInit {
         this.exercise = <Exercise>data;
 
         this.createFilledExerciseForm();
-
+        this.isDataLoaded = true
         console.log(this.exercise)
   
       }).catch((data)=>console.log(data))
@@ -111,6 +112,9 @@ export class FormExerciseComponent implements OnInit {
         this.fileURLExists = false;
         console.log(err);
       })
+    }
+    else{
+      this.isDataLoaded = true
     }
   }
 

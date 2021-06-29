@@ -1,4 +1,5 @@
-<div *ngIf="isDataLoaded" class="container-fluid">
+<app-loader *ngIf="!isDataLoaded " class="overlay animated"></app-loader>
+<div *ngIf="isDataLoaded" class="container-fluid animated">
     <div class="row mt-3">
         <div class="col text-right">
             <button type="button" class="btn btn-success" (click)="hide=!hide" data-toggle="collapse" data-target="#solution">

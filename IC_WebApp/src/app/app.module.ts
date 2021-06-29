@@ -26,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationControlsComponent } from './components/pagination-controls/pagination-controls.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     PaginationControlsComponent,
     FormExerciseComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

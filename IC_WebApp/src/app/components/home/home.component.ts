@@ -25,6 +25,8 @@ export class HomeComponent implements OnInit {
    selectedSection:string = "all";
    selectedLevel:string = "all";
    
+   isDataLoaded:boolean = false;
+
 
    constructor(private exerciseService:ExerciseService,private searchService: SearchService) { }
 
@@ -40,6 +42,7 @@ export class HomeComponent implements OnInit {
          this.sections = this.getSections();
          this.levels=this.getLevels();     
          console.log(this.exercises);
+         this.isDataLoaded=true;
                  
       })
    }
