@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import Swal from 'sweetalert2';
+import swal from 'sweetalert2';
 import { FileInfo } from '../models/file-info.model';
 
 @Injectable({
@@ -10,7 +12,10 @@ import { FileInfo } from '../models/file-info.model';
 })
 export class FileService {
 
-  constructor(private database: AngularFireDatabase, private fireStorage: AngularFireStorage) { }
+  constructor(
+    private database: AngularFireDatabase, 
+    private fireStorage: AngularFireStorage,
+    private router: Router) { }
   storageRef = this.fireStorage.storage.ref();
   rootRef = this.database.database.ref('/files');
 
@@ -20,7 +25,8 @@ export class FileService {
     let swalModel:any = {
       allowOutsideClick: false,
       icon: 'info',
-      text: 'Upload is ' + progress + '% done'
+      title: 'Subiendo archivo: ' + progress.toFixed(2) + '% completado',
+      text: 'Espere por favor'
     }
 
     var uploadTask = this.storageRef.child('codes/'+ code + '/' + file.name).put(file);
@@ -28,12 +34,13 @@ export class FileService {
     Swal.showLoading();
     
     uploadTask.on(firebase.default.storage.TaskEvent.STATE_CHANGED,
-      function(snapshot:any) {
+      (snapshot:any) => {
         progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         swalModel = {
           allowOutsideClick: false,
           icon: 'info',
-          text: 'Upload is ' + progress + '% done',
+          title: 'Subiendo archivo: ' + progress.toFixed(0) + '% completado',
+          text: 'Espere por favor',
           showConfirmButton: false
         }
         Swal.update(swalModel);
@@ -41,11 +48,14 @@ export class FileService {
         
         if(progress === 100){
           Swal.hideLoading();
-          Swal.update({
+          Swal.fire({
             allowOutsideClick: false,
             icon: 'info',
-            text: 'Upload is ' + progress + '% done',
+            title: progress + '% completado',
+            text: 'Archivo subido con exito',
             showConfirmButton: true
+          }).then(() => {
+            this.router.navigateByUrl('/home');
           })
         }
 
