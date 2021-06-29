@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
+import { ExerciseService } from 'src/app/services/exercise.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -14,7 +16,7 @@ export class ExerciseCardComponent implements OnInit {
   @Input() exercise!: Exercise;
   hide:boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private exerciseService: ExerciseService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +34,20 @@ export class ExerciseCardComponent implements OnInit {
   }
 
   deleteExercise(){
-    //delete code
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'warning',
+      title: '¿Desea eliminar el ejercicio?',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: "No",
+      confirmButtonText: "Sí"
+    })
+    .then((confirm)=>{
+      if(confirm.isConfirmed){
+        this.exerciseService.deleteExercise(this.exerciseCode);
+      }
+    })
   }
 
 
