@@ -4,7 +4,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import Swal from 'sweetalert2';
-import swal from 'sweetalert2';
 import { FileInfo } from '../models/file-info.model';
 
 @Injectable({
@@ -56,6 +55,11 @@ export class FileService {
             showConfirmButton: true
           }).then(() => {
             this.router.navigateByUrl('/home');
+            Swal.fire(
+              'Ejercicio guardado',
+              '',
+              'success'
+            )
           })
         }
 
@@ -129,7 +133,7 @@ export class FileService {
   deleteFileInfo(key: string){
     let fileInfo: FileInfo;
     this.getFileInfo(key).then((data)=>{
-      
+
       fileInfo = <FileInfo>data
 
       this.rootRef.child(key).remove()

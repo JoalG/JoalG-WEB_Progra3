@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import Swal from 'sweetalert2';
 import { Exercise } from '../models/exercise.model';
@@ -16,7 +17,8 @@ export class ExerciseService {
   constructor(
     private database: AngularFireDatabase, 
     private fireStorage: AngularFireStorage,
-    private fileService: FileService) { 
+    private fileService: FileService,
+    private router: Router) { 
     
   }
   rootRef = this.database.database.ref('/exercises');
@@ -47,18 +49,39 @@ export class ExerciseService {
 
         if(typeof file !== 'undefined'){
           this.fileService.uploadFileInStorage(file, key, fileInfo);
+          Swal.fire(
+            'Ejercicio guardado',
+            '',
+            'success'
+          )
+        }
+        else{
+          this.router.navigateByUrl('home');
+          Swal.fire(
+            'Ejercicio guardado',
+            '',
+            'success'
+          )
         }
         console.log(response)
       }, 
       error => console.log(error));
   }
 
-  updateExercise(exercise: Exercise, key: string, file:any, fileInfo: FileInfo){
+  async updateExercise(exercise: Exercise, key: string, file:any, fileInfo: FileInfo){
     this.database.database.ref("exercises/"+ key).set(exercise)
     .then(response => {
       console.log("Sucess");
       if(typeof file !== 'undefined'){
         this.fileService.uploadFileInStorage(file, key, fileInfo);
+      }
+      else{
+        this.router.navigateByUrl('home');
+        Swal.fire(
+          'Ejercicio actulizado',
+          '',
+          'success'
+        )
       }
     })
     .catch(err => console.log("Error"));
@@ -89,12 +112,18 @@ export class ExerciseService {
   deleteExercise(key: string){
     this.rootRef.child(key).remove()
     .then(res =>{
+      this.fileService.deleteFileInfo(key);
+      Swal.fire(
+        'Ejercicio eliminado',
+        '',
+        'success'
+      )
       console.log("Delete success")
     })
     .catch(err =>{
       console.log("Delete error", err)
     })
-    this.fileService.deleteFileInfo(key);
+    
   }
   /*
   How to use getExercises in other components:

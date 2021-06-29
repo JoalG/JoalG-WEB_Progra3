@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -33,7 +34,20 @@ export class ExerciseCardComponent implements OnInit {
   }
 
   deleteExercise(){
-    this.exerciseService.deleteExercise(this.exerciseCode);
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'warning',
+      title: '¿Desea eliminar el ejercicio?',
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: "No",
+      confirmButtonText: "Sí"
+    })
+    .then((confirm)=>{
+      if(confirm.isConfirmed){
+        this.exerciseService.deleteExercise(this.exerciseCode);
+      }
+    })
   }
 
 
