@@ -3,6 +3,7 @@ import { Exercise,Example } from 'src/app/models/exercise.model';
 import { CodeEditorModule, CodeModel } from '@ngstack/code-editor';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-solve-exercise',
@@ -15,6 +16,7 @@ export class SolveExerciseComponent implements OnInit {
    isDataLoaded:boolean = false;
    exerciseCode: string = "";
    exercise!: Exercise;
+   fileURL: string = '';
 
    hide:boolean = true;
    
@@ -38,7 +40,11 @@ export class SolveExerciseComponent implements OnInit {
    
 
 
-   constructor(private exerciseService: ExerciseService,private route: ActivatedRoute) { 
+   constructor(
+      private exerciseService: ExerciseService,
+      private route: ActivatedRoute,
+      private fileService: FileService
+   ) { 
       try {
          this.exerciseCode = <string>this.route.snapshot.paramMap.get('code');
    
@@ -49,13 +55,22 @@ export class SolveExerciseComponent implements OnInit {
    
    ngOnInit(): void {
       
+      this.fileService.getFileInfo(this.exerciseCode)
+         .then((data:any)=>{
+            this.fileURL = data.URL;
+         })
+         .catch(error =>{
+            console.log(error);
+         })
+
       this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
          this.exercise = <Exercise>data;
          console.log(this.exercise);
          this.solutionCodeModel.value = this.exercise.solution.code;
          this.isDataLoaded = true;
   
-       }).catch((data)=>console.log(data));
+      }).catch((data)=>console.log(data));
+
  
    }
 
@@ -83,5 +98,14 @@ export class SolveExerciseComponent implements OnInit {
       console.log('CODE', value);
    }
 
+   downloadMyFile(){
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', this.fileURL);
+      link.setAttribute('download', '');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  }
 
 }
