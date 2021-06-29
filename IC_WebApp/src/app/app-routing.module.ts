@@ -10,16 +10,16 @@ const routes: Routes = [
 
   {path:'home', component:HomeComponent},
   {path:'form-exercise', component:FormExerciseComponent},
-  {path:'exercise', component:SolveExerciseComponent},
+  {path:'solve-exercise/:code', component:SolveExerciseComponent},
   {path:'sign-up', component:SignUpComponent},
   {path:'login', component:LoginComponent},
 
-  {path:'**',pathMatch:'full',redirectTo:'exercise'}
+  {path:'**',pathMatch:'full',redirectTo:'home'}
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

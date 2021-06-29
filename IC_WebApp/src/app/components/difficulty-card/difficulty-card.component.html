@@ -1,4 +1,4 @@
-<h3>
+<h3 class="animated">
     Dificultades
     <button type="button" class="btn btn-light" (click)="hide=!hide" data-toggle="collapse" data-target="#difficulties">
         <i class="fas " [ngClass]="hide?'fa-chevron-down':'fa-chevron-up'"></i>
@@ -7,7 +7,7 @@
 
 <div id="difficulties" class="collapse show">
     <div *ngFor="let difficulty of difficulties, index as i" class="d-inline d-xl-block">
-        <button type="button" class="btn my-2 mr-2" [ngClass]="difficulty.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectDifficulty(i)">              
+        <button type="button" class="animated btn my-2 mr-2" [ngClass]="difficulty.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectDifficulty(i)">              
             <h6 class="pt-1">
                 <i *ngFor='let in of counter(difficulty.level,true)' class="fas fa-star text-warning "></i>
                 <i *ngFor='let in of counter(difficulty.level,false)' class="fas fa-star"></i>

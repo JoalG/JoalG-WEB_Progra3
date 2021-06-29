@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit {
   logOut(){
     this.userService.logout();
   }
+  
   search(){
     this.searchService.changeData(this.filter);  //invoke new Data
     this.router.navigate(['/home']);
