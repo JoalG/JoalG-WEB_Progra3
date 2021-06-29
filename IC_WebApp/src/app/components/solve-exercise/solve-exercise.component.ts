@@ -38,7 +38,7 @@ export class SolveExerciseComponent implements OnInit {
    
 
 
-   constructor(private exerciseService: ExerciseService,private router: Router,private route: ActivatedRoute) { 
+   constructor(private exerciseService: ExerciseService,private route: ActivatedRoute) { 
       try {
          this.exerciseCode = <string>this.route.snapshot.paramMap.get('code');
    

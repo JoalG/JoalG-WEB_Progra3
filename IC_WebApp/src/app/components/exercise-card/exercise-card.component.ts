@@ -28,11 +28,11 @@ export class ExerciseCardComponent implements OnInit {
   }
 
   editExercise(){
-    this.router.navigate(['/exercise',this.exerciseCode]);
+    this.router.navigate(['/form-exercise',{exerciseCode : this.exerciseCode}]);
   }
 
   deleteExercise(){
-    this.router.navigate(['/exercise',this.exerciseCode]);
+    //delete code
   }
 
 
