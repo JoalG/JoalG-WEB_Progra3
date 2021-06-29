@@ -175,7 +175,7 @@
                 <h4>Código</h4>
                 <div class="form-group" [formGroup]="solution">
                     <div style="height: 400px">
-                        <ngs-code-editor style="height: 100%" theme="vs-dark" [codeModel]="solutionCodeModel" [readOnly]="false" [options]="options" (valueChanged)="onCodeChanged($event)">
+                        <ngs-code-editor style="height: 100%" theme="vs" [codeModel]="solutionCodeModel" [readOnly]="false" [options]="options" (valueChanged)="onCodeChanged($event)">
                         </ngs-code-editor>
                     </div>
                     <small *ngIf="codeInvalid" class="text-danger">
