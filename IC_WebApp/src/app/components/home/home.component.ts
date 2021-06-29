@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
          this.exercises = <any[]>data;  
          this.sections = this.getSections();
          this.levels=this.getLevels();     
-         //console.log(this.exercises);
+         console.log(this.exercises);
                  
       })
    }
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
          return this.selectedLevel=="all"? true:elem.exercise.level == this.selectedLevel;
       });
 
-      console.log(res);
+      //console.log(res);
       
       
       if(this.key=="created"){
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
 
       
 
-      console.log(res);
+      //console.log(res);
 
       return res;  
    }
@@ -138,8 +138,8 @@ export class HomeComponent implements OnInit {
 
 
    updateLevels(){
-      console.log(this.exercises
-         .map((item)=>(item.exercise)));
+      /* console.log(this.exercises
+         .map((item)=>(item.exercise))); */
       
       let result = this.exercises
       .map((item)=>(item.exercise))
@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit {
          return total;
          
       },{"1":0,"2":0,"3":0,"4":0,"5":0});
-      console.log(result);
+      //console.log(result);
 
       this.levels.forEach(element => {
          element.amount = result[element.level];

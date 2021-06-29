@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 
 
@@ -9,16 +10,29 @@ import { Exercise } from 'src/app/models/exercise.model';
 })
 export class ExerciseCardComponent implements OnInit {
 
+  @Input() exerciseCode!: string ;
   @Input() exercise!: Exercise;
   hide:boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   counter(i: string, b:boolean) {
     return b? new Array( Number.parseInt(i)): new Array( 5- Number.parseInt(i)) ;
+  }
+
+  goToExercise(){
+    this.router.navigate(['/solve-exercise',this.exerciseCode]);
+  }
+
+  editExercise(){
+    this.router.navigate(['/exercise',this.exerciseCode]);
+  }
+
+  deleteExercise(){
+    this.router.navigate(['/exercise',this.exerciseCode]);
   }
 
 

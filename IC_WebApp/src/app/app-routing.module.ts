@@ -10,11 +10,11 @@ const routes: Routes = [
 
   {path:'home', component:HomeComponent},
   {path:'form-exercise', component:FormExerciseComponent},
-  {path:'exercise', component:SolveExerciseComponent},
+  {path:'solve-exercise/:code', component:SolveExerciseComponent},
   {path:'sign-up', component:SignUpComponent},
   {path:'login', component:LoginComponent},
 
-  {path:'**',pathMatch:'full',redirectTo:'exercise'}
+  {path:'**',pathMatch:'full',redirectTo:'home'}
 
 ];
 

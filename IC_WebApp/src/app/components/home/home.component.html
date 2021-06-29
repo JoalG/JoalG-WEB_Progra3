@@ -74,7 +74,7 @@
 
                 <div class="row py-3">
                     <div *ngFor="let exercise of getExercises() | filter:filter | paginate: { itemsPerPage: page_size, currentPage: page_number }" class="col-md-6 py-3 ">
-                        <app-exercise-card [exercise]=exercise.exercise></app-exercise-card>
+                        <app-exercise-card [exerciseCode]=exercise.key [exercise]=exercise.exercise></app-exercise-card>
                     </div>
                 </div>
 
