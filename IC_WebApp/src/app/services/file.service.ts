@@ -126,6 +126,28 @@ export class FileService {
     return promise;
   }
 
+  deleteFileInfo(key: string){
+    let fileInfo: FileInfo;
+    this.getFileInfo(key).then((data)=>{
+      
+      fileInfo = <FileInfo>data
+
+      this.rootRef.child(key).remove()
+      .then(res =>{
+        this.deleteOldFile(fileInfo);
+        console.log("Delete success")
+      })
+      .catch(err =>{
+        console.log("Delete error", err)
+      })
+    })
+    .catch(err =>{
+      console.log("No file", err)
+    })
+
+  }
+
+
   /*
   getDownloadURL(code: string): Promise<any>{
     let promise = new Promise((resolve,reject)=>{

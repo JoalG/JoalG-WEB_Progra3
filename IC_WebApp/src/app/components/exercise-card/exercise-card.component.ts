@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
+import { ExerciseService } from 'src/app/services/exercise.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class ExerciseCardComponent implements OnInit {
   @Input() exercise!: Exercise;
   hide:boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private exerciseService: ExerciseService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +33,7 @@ export class ExerciseCardComponent implements OnInit {
   }
 
   deleteExercise(){
-    //delete code
+    this.exerciseService.deleteExercise(this.exerciseCode);
   }
 
 

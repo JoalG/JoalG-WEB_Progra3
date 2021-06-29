@@ -86,6 +86,16 @@ export class ExerciseService {
     return promise;
   }
 
+  deleteExercise(key: string){
+    this.rootRef.child(key).remove()
+    .then(res =>{
+      console.log("Delete success")
+    })
+    .catch(err =>{
+      console.log("Delete error", err)
+    })
+    this.fileService.deleteFileInfo(key);
+  }
   /*
   How to use getExercises in other components:
 

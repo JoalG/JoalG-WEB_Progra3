@@ -26,7 +26,7 @@ export class FormExerciseComponent implements OnInit {
     private fileService: FileService
   ) { 
     this.exerciseCode = <string>route.snapshot.paramMap.get('exerciseCode');
-    this.exerciseCode==""?this.exerciseCode="none":false;
+    this.exerciseCode==null?this.exerciseCode="none":false;
   }
 
   exerciseForm!: FormGroup;
