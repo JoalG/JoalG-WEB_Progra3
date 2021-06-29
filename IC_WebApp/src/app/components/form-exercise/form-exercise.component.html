@@ -1,4 +1,6 @@
-<div class="container-fluid pt-3 main-cont">
+<app-loader *ngIf="!isDataLoaded " class="overlay animated"></app-loader>
+
+<div *ngIf="isDataLoaded " class="container-fluid pt-3 main-cont animated">
     <h1>Nuevo Ejercicio</h1>
     <hr>
     <form [formGroup]="exerciseForm" (ngSubmit)="saveExercise()">
@@ -9,69 +11,35 @@
             <div class="card-body bg-light">
                 <div class="form-group">
                     <label for="name">Nombre del ejercicio</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="name" placeholder="Ej. Árbol" 
-                        formControlName="name"
-                        [class.is-invalid] = "nameInvalid"
-                    >
+                    <input type="text" class="form-control" id="name" placeholder="Ej. Árbol" formControlName="name" [class.is-invalid]="nameInvalid">
                     <small *ngIf="nameInvalid" class="text-danger">
                         Debe ingresar un nombre para el ejercicio
                     </small>
                 </div>
                 <div class="form-group">
                     <label for="section">Categoría</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="section" 
-                        placeholder="Ej. Árboles" 
-                        formControlName="section"
-                        [class.is-invalid] = "sectionInvalid"
-                    >
+                    <input type="text" class="form-control" id="section" placeholder="Ej. Árboles" formControlName="section" [class.is-invalid]="sectionInvalid">
                     <small *ngIf="sectionInvalid" class="text-danger">
                         Debe ingresar una categoría para el ejercicio
                     </small>
                 </div>
                 <div class="form-group">
                     <label for="level">Nivel de dificultad</label>
-                    <input 
-                        type="number" 
-                        class="form-control" 
-                        id="level" 
-                        placeholder="1-5" 
-                        formControlName="level"
-                        [class.is-invalid] = "levelInvalid"
-                    >
+                    <input type="number" class="form-control" id="level" placeholder="1-5" formControlName="level" [class.is-invalid]="levelInvalid">
                     <small *ngIf="levelInvalid" class="text-danger">
                         Debe ingresar una dificultad para el ejercicio
                     </small>
                 </div>
                 <div class="form-group">
                     <label for="call">Llamada de la función</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="call" 
-                        placeholder="Ej. arbol (centro, hijoizquierdo, hijoderecho)" 
-                        formControlName="call"
-                        [class.is-invalid] = "callInvalid"
-                    >
+                    <input type="text" class="form-control" id="call" placeholder="Ej. arbol (centro, hijoizquierdo, hijoderecho)" formControlName="call" [class.is-invalid]="callInvalid">
                     <small *ngIf="callInvalid" class="text-danger">
                         Debe ingresar una llamada
                     </small>
                 </div>
                 <div class="form-group">
                     <label for="details">Detalles</label>
-                    <textarea 
-                        class="form-control" 
-                        id="details" 
-                        rows="3" 
-                        placeholder="Ej. Realice una función que retorne una lista que simboliza un árbol..." 
-                        formControlName="details"
-                        [class.is-invalid] = "detailsInvalid"
-                    >
+                    <textarea class="form-control" id="details" rows="3" placeholder="Ej. Realice una función que retorne una lista que simboliza un árbol..." formControlName="details" [class.is-invalid]="detailsInvalid">
                     </textarea>
                     <small *ngIf="detailsInvalid" class="text-danger">
                         Debe ingresar una descripción para el ejercicio
@@ -90,9 +58,9 @@
                 <a href="{{fileInfo.URL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
             </div>
         </div>
-        
+
         <hr>
-        
+
         <div class="card mx-md-5">
             <div class="card-header bg-dark">
                 <h2 class="text-white">Ejemplos</h2>
@@ -104,28 +72,14 @@
                             <div class="card-body" [formGroup]="getExampleGroup(i)">
                                 <div class="form-group">
                                     <label for="exampleCall">Llamada</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="exampleCall" 
-                                        placeholder="Ej. arbol(100,[90,80],[110,105])" 
-                                        formControlName="call"
-                                        [class.is-invalid] = "exampleCallInvalid(i)"
-                                    >
+                                    <input type="text" class="form-control" id="exampleCall" placeholder="Ej. arbol(100,[90,80],[110,105])" formControlName="call" [class.is-invalid]="exampleCallInvalid(i)">
                                     <small *ngIf="exampleCallInvalid(i)" class="text-danger">
                                         Debe ingresar una llamada
                                     </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleResult">Resultado</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="exampleResult" 
-                                        placeholder="Ej. [10, [5, 4, 6], [7, 8, 9]]" 
-                                        formControlName="result"
-                                        [class.is-invalid] = "exampleResultInvalid(i)"
-                                    >
+                                    <input type="text" class="form-control" id="exampleResult" placeholder="Ej. [10, [5, 4, 6], [7, 8, 9]]" formControlName="result" [class.is-invalid]="exampleResultInvalid(i)">
                                     <small *ngIf="exampleResultInvalid(i)" class="text-danger">
                                         Debe ingresar una resultado para la llamada
                                     </small>
@@ -146,7 +100,7 @@
                 </div>
             </div>
         </div>
-        
+
         <hr>
 
         <div class="card mx-md-5">
@@ -161,28 +115,14 @@
                             <div class="card-body " [formGroup]="getInputGroup(i)">
                                 <div class="form-group">
                                     <label for="inputName">Nombre</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="inputName" 
-                                        placeholder="Ej. centro" 
-                                        formControlName="name"
-                                        [class.is-invalid] = "inputNameInvalid(i)"
-                                        >
+                                    <input type="text" class="form-control" id="inputName" placeholder="Ej. centro" formControlName="name" [class.is-invalid]="inputNameInvalid(i)">
                                     <small *ngIf="inputNameInvalid(i)" class="text-danger">
                                         Debe ingresar una nombre para la entrada
                                     </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputType">Tipo</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="inputType" 
-                                        placeholder="Ej. Un valor para la raiz" 
-                                        formControlName="type"
-                                        [class.is-invalid] = "inputTypeInvalid(i)"
-                                    >
+                                    <input type="text" class="form-control" id="inputType" placeholder="Ej. Un valor para la raiz" formControlName="type" [class.is-invalid]="inputTypeInvalid(i)">
                                     <small *ngIf="inputTypeInvalid(i)" class="text-danger">
                                         Debe ingresar un tipo para la entrada
                                     </small>
@@ -197,7 +137,7 @@
                 <div class="mt-4">
                     <button type="button" class="btn btn-primary" (click)="addInput()">Agregar entrada <i class="fas fa-plus"></i></button>
                 </div>
-                
+
                 <hr>
 
                 <h4>Salidas</h4>
@@ -207,28 +147,14 @@
                             <div class="card-body" [formGroup]="getOutputGroup(i)">
                                 <div class="form-group">
                                     <label for="outputName">Nombre</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="outputName" 
-                                        placeholder="Ej. centro" 
-                                        formControlName="name"
-                                        [class.is-invalid] = "outputNameInvalid(i)"
-                                    >
+                                    <input type="text" class="form-control" id="outputName" placeholder="Ej. centro" formControlName="name" [class.is-invalid]="outputNameInvalid(i)">
                                     <small *ngIf="outputNameInvalid(i)" class="text-danger">
                                         Debe ingresar una nombre para la salida
                                     </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="outputType">Tipo</label>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="outputType" 
-                                        placeholder="Ej. Un valor para la raiz" 
-                                        formControlName="type"
-                                        [class.is-invalid] = "outputTypeInvalid(i)"
-                                    >
+                                    <input type="text" class="form-control" id="outputType" placeholder="Ej. Un valor para la raiz" formControlName="type" [class.is-invalid]="outputTypeInvalid(i)">
                                     <small *ngIf="outputTypeInvalid(i)" class="text-danger">
                                         Debe ingresar un tipo para la salida
                                     </small>

@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { UserService } from 'src/app/services/user.service';
@@ -21,18 +22,22 @@ export class FormExerciseComponent implements OnInit {
     private exerciseService: ExerciseService,
     private userService: UserService,
     private datePipe: DatePipe,
+    private route: ActivatedRoute,
     private fileService: FileService
-  ) 
-  { }
+  ) { 
+    this.exerciseCode = <string>route.snapshot.paramMap.get('exerciseCode');
+    this.exerciseCode==""?this.exerciseCode="none":false;
+  }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "-MdJMGDDfO3XocoEdrxs";
+  exerciseCode: string = "none";
   exercise!: Exercise;
   file: any;
   fileURL: any;
   fileSizeLimit: number = 26214400;
   fileName: string = 'Ningún Archivo';
   fileURLExists: boolean = false;
+  isDataLoaded:boolean = false;
   fileInfo!: FileInfo;
 
   solutionCodeModel: CodeModel = {
@@ -123,6 +128,7 @@ export class FormExerciseComponent implements OnInit {
           dependencies: ['@types/node', '@ngstack/translate', '@ngstack/code-editor']
         };
 
+        this.isDataLoaded = true
         console.log(this.exercise)
   
       }).catch((data)=>console.log(data))
@@ -141,6 +147,9 @@ export class FormExerciseComponent implements OnInit {
         }
         this.fileURLExists = false;
       })
+    }
+    else{
+      this.isDataLoaded = true
     }
   }
 
