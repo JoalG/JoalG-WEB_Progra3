@@ -55,7 +55,7 @@
                 <small *ngIf="fileInvalid()" class="text-danger">
                     El archivo debe ser menor de 25 mb
                 </small>
-                <a href="{{fileURL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
+                <a href="{{fileInfo.URL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
             </div>
         </div>
 
@@ -174,8 +174,10 @@
 
                 <h4>Código</h4>
                 <div class="form-group" [formGroup]="solution">
-                    <textarea class="form-control" d="details" rows="3" formControlName="code" [class.is-invalid]="codeInvalid">
-                    </textarea>
+                    <div style="height: 400px">
+                        <ngs-code-editor style="height: 100%" theme="vs" [codeModel]="solutionCodeModel" [readOnly]="false" [options]="options" (valueChanged)="onCodeChanged($event)">
+                        </ngs-code-editor>
+                    </div>
                     <small *ngIf="codeInvalid" class="text-danger">
                         Debe ingresar código para la solución
                     </small>
@@ -189,6 +191,3 @@
         </div>
     </form>
 </div>
-
-
-{{ exercise | json }}

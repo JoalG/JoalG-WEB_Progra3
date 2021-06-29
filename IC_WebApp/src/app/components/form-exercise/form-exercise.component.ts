@@ -5,6 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { UserService } from 'src/app/services/user.service';
+import { CodeEditorModule, CodeModel } from '@ngstack/code-editor';
+import { FileInfo } from 'src/app/models/file-info.model';
+import { FileService } from 'src/app/services/file.service';
 
 
 @Component({
@@ -19,10 +22,11 @@ export class FormExerciseComponent implements OnInit {
     private exerciseService: ExerciseService,
     private userService: UserService,
     private datePipe: DatePipe,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fileService: FileService
   ) { 
     this.exerciseCode = <string>route.snapshot.paramMap.get('exerciseCode');
-    this.exerciseCode==""?this.exerciseCode="none":false;
+    this.exerciseCode==null?this.exerciseCode="none":false;
   }
 
   exerciseForm!: FormGroup;
@@ -34,6 +38,25 @@ export class FormExerciseComponent implements OnInit {
   fileName: string = 'Ningún Archivo';
   fileURLExists: boolean = false;
   isDataLoaded:boolean = false;
+  fileInfo!: FileInfo;
+
+  solutionCodeModel: CodeModel = {
+    language: 'python',
+    uri: '',
+    value: '',
+    dependencies: ['@types/node', '@ngstack/translate', '@ngstack/code-editor']
+  };
+
+  options = {
+    lineNumbers: true,
+    contextmenu: false,
+    minimap: {
+       enabled: false
+    },
+    scrollBeyondLastLine:false,
+    fontSize: 16,
+    selectionClipboard: true
+  };
   /*
   exercise: Exercise =
 
@@ -96,21 +119,33 @@ export class FormExerciseComponent implements OnInit {
 
       this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
         this.exercise = <Exercise>data;
-
         this.createFilledExerciseForm();
+        
+        this.solutionCodeModel = {
+          language: 'python',
+          uri: '',
+          value: this.exercise.solution.code,
+          dependencies: ['@types/node', '@ngstack/translate', '@ngstack/code-editor']
+        };
+
         this.isDataLoaded = true
         console.log(this.exercise)
   
       }).catch((data)=>console.log(data))
 
-      this.exerciseService.getDownloadURL(this.exerciseCode).then((url)=>{
-        this.fileURL = url;
+
+      this.fileService.getFileInfo(this.exerciseCode)
+      .then((data) =>{
+        this.fileInfo = <FileInfo>data
         this.fileURLExists = true;
-        console.log(url);
-      }).catch(err =>{
-        this.fileURL = '';
+      })
+      .catch(err =>{
+        this.fileInfo = {
+          name: '',
+          URL: '',
+          path: ''
+        }
         this.fileURLExists = false;
-        console.log(err);
       })
     }
     else{
@@ -351,7 +386,7 @@ export class FormExerciseComponent implements OnInit {
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
         }
-        this.exerciseService.saveNewExercise(this.exercise, this.file);
+        this.exerciseService.saveNewExercise(this.exercise, this.file, this.fileInfo);
       }
       // update exercise
       else{
@@ -361,7 +396,7 @@ export class FormExerciseComponent implements OnInit {
           creator: this.exercise.creator,
           ...this.exerciseForm.value
         }
-        this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file);
+        this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file, this.fileInfo);
       }
     }
   }
@@ -384,6 +419,10 @@ export class FormExerciseComponent implements OnInit {
       return this.file.size > this.fileSizeLimit;
     }
     return false;
+  }
+
+  onCodeChanged(value: any) {
+    this.code.setValue(value);
   }
 
 }
