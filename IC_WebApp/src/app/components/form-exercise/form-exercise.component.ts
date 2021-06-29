@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
 import { UserService } from 'src/app/services/user.service';
+import { CodeEditorModule, CodeModel } from '@ngstack/code-editor';
 
 
 @Component({
@@ -22,13 +23,31 @@ export class FormExerciseComponent implements OnInit {
   { }
 
   exerciseForm!: FormGroup;
-  @Input() exerciseCode: string = "none";
+  @Input() exerciseCode: string = "-MdJMGDDfO3XocoEdrxs";
   exercise!: Exercise;
   file: any;
   fileURL: any;
   fileSizeLimit: number = 26214400;
   fileName: string = 'Ningún Archivo';
   fileURLExists: boolean = false;
+
+  solutionCodeModel: CodeModel = {
+    language: 'python',
+    uri: '',
+    value: '',
+    dependencies: ['@types/node', '@ngstack/translate', '@ngstack/code-editor']
+  };
+
+  options = {
+    lineNumbers: true,
+    contextmenu: false,
+    minimap: {
+       enabled: false
+    },
+    scrollBeyondLastLine:false,
+    fontSize: 16,
+    selectionClipboard: true
+  };
   /*
   exercise: Exercise =
 
@@ -91,8 +110,14 @@ export class FormExerciseComponent implements OnInit {
 
       this.exerciseService.getExerciseByKey(this.exerciseCode).then((data)=>{
         this.exercise = <Exercise>data;
-
         this.createFilledExerciseForm();
+        
+        this.solutionCodeModel = {
+          language: 'python',
+          uri: '',
+          value: this.exercise.solution.code,
+          dependencies: ['@types/node', '@ngstack/translate', '@ngstack/code-editor']
+        };
 
         console.log(this.exercise)
   
@@ -376,6 +401,10 @@ export class FormExerciseComponent implements OnInit {
       return this.file.size > this.fileSizeLimit;
     }
     return false;
+  }
+
+  onCodeChanged(value: any) {
+    this.code.setValue(value);
   }
 
 }
