@@ -28,7 +28,10 @@ export class HomeComponent implements OnInit {
    isDataLoaded:boolean = false;
 
 
-   constructor(private exerciseService:ExerciseService,private searchService: SearchService) { }
+   constructor(
+      private exerciseService:ExerciseService,
+      private searchService: SearchService
+   ) { }
 
    ngOnInit(): void {
       this.getData();

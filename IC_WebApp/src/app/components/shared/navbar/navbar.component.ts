@@ -2,6 +2,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -28,6 +29,11 @@ export class NavbarComponent implements OnInit {
 
   logOut(){
     this.userService.logout();
+    Swal.fire(
+      'Sesión cerrada',
+      'Hasta luego',
+      'success'
+    )
   }
   
   search(){
