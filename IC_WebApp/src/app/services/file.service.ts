@@ -98,7 +98,7 @@ export class FileService {
   saveFileInfo(fileInfo: FileInfo, code: string){
     this.database.database.ref("files/"+ code).set(fileInfo)
     .then(response => {
-      console.log("Sucess");
+      console.log("Sucess - Info Saved");
 
     })
     .catch(err => console.log("Error"));

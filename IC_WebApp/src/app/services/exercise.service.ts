@@ -115,6 +115,7 @@ export class ExerciseService {
     this.rootRef.child(key).remove()
     .then(res =>{
       this.fileService.deleteFileInfo(key);
+      this.difficultyService.deleteDifficulty(key);
       Swal.fire(
         'Ejercicio eliminado',
         '',

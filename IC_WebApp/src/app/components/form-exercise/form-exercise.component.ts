@@ -392,6 +392,11 @@ export class FormExerciseComponent implements OnInit {
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
         }
+        this.fileInfo = {
+          name: '',
+          URL: '',
+          path: ''
+        }
         this.exerciseService.saveNewExercise(this.exercise, this.file, this.fileInfo);
       }
       // update exercise

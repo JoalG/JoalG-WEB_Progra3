@@ -68,4 +68,14 @@ export class DifficultyService {
     });
     return promise;
   }
+
+  deleteDifficulty(key: string){
+    this.rootRef.child(key).remove()
+    .then(res =>{
+      console.log('Success');
+    })
+    .catch(err =>{
+      console.log(err);
+    })
+  }
 }
