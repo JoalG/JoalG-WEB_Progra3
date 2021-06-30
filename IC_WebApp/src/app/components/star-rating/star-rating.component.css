@@ -1,5 +1,4 @@
 @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 body {
     background-color: #D32F2F;
     font-family: 'Calibri', sans-serif !important
@@ -36,7 +35,7 @@ h1 {
 
 .rating>label:before {
     margin: 5px;
-    font-size: 2.25em;
+    font-size: 2em;
     font-family: FontAwesome;
     display: inline-block;
     content: "\f005"

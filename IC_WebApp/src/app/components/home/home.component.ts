@@ -42,11 +42,13 @@ export class HomeComponent implements OnInit {
    getData(){
       this.exerciseService.getExercises().then((data)=>{
          this.exercises = <any[]>data;  
+         this.exercises.forEach(element => {
+            element.exercise.level= Number(element.exercise.level).toFixed();
+         });
          this.sections = this.getSections();
          this.levels=this.getLevels();     
          console.log(this.exercises);
-         this.isDataLoaded=true;
-                 
+         this.isDataLoaded=true;   
       })
    }
 

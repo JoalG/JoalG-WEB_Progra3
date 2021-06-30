@@ -42,4 +42,8 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  refresh(): void {
+    window.location.reload();
+  }
+
 }
