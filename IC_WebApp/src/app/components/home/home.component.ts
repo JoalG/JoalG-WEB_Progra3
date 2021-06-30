@@ -167,7 +167,7 @@ export class HomeComponent implements OnInit {
 
 
    scroll(el: string) {
-      document.getElementById(el)?.scrollIntoView({behavior:"smooth"});
+      window.scrollTo({top: 0, behavior: 'smooth'});
    }
 
    counter(i: string, b:boolean) {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
@@ -15,6 +15,7 @@ export class ExerciseCardComponent implements OnInit {
 
   @Input() exerciseCode!: string ;
   @Input() exercise!: Exercise;
+  @Output() delete = new EventEmitter();
   hide:boolean = false;
 
   constructor(
@@ -51,6 +52,7 @@ export class ExerciseCardComponent implements OnInit {
     .then((confirm)=>{
       if(confirm.isConfirmed){
         this.exerciseService.deleteExercise(this.exerciseCode);
+        this.delete.emit(this.exerciseCode);
       }
     })
   }
