@@ -21,7 +21,7 @@
                             Categoria:
                         </h5>
                         <h5>
-                            {{selectedSection.replace("all ","Todas ")}}
+                            {{selectedSection.replace("all","Todas ")}}
                         </h5>
                     </div>
 
@@ -86,7 +86,7 @@
                 <div class="row py-3 animated " *ngIf="isDataLoaded ">
 
                     <div *ngFor="let exercise of getExercises() | filter:filter | paginate: { itemsPerPage: page_size, currentPage: page_number } " class="col-md-6 py-3 ">
-                        <app-exercise-card [exerciseCode]=exercise.key [exercise]=exercise.exercise></app-exercise-card>
+                        <app-exercise-card [exerciseCode]=exercise.key [exercise]=exercise.exercise (delete)="getData()"></app-exercise-card>
                     </div>
                 </div>
 

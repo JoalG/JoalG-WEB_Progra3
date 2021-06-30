@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import Swal from 'sweetalert2';
 import { Exercise } from '../models/exercise.model';
 import { FileInfo } from '../models/file-info.model';
+import { DifficultyService } from './difficulty.service';
 import { FileService } from './file.service';
 
 @Injectable({
@@ -18,6 +19,7 @@ export class ExerciseService {
     private database: AngularFireDatabase, 
     private fireStorage: AngularFireStorage,
     private fileService: FileService,
+    private difficultyService: DifficultyService,
     private router: Router) { 
     
   }
@@ -46,6 +48,7 @@ export class ExerciseService {
       .then(response => {
         let key: string = response['key']!;
         this.rootRef.child(key).child('code').set(key);
+        this.difficultyService.createDifficulty(Number(exercise.level), key);
 
         if(typeof file !== 'undefined'){
           this.fileService.uploadFileInStorage(file, key, fileInfo);
@@ -72,6 +75,8 @@ export class ExerciseService {
     this.database.database.ref("exercises/"+ key).set(exercise)
     .then(response => {
       console.log("Sucess");
+      this.difficultyService.createDifficulty(Number(exercise.level), key);
+      
       if(typeof file !== 'undefined'){
         this.fileService.uploadFileInStorage(file, key, fileInfo);
       }
@@ -98,12 +103,9 @@ export class ExerciseService {
           };
           exercisesAndKey.push(x);
         });
-        if(exercisesAndKey.length !== 0){
-          resolve(exercisesAndKey)
-        }
-        else{
-          reject(exercisesAndKey)
-        }
+        resolve(exercisesAndKey)
+      }, err =>{
+        reject(err)
       });
     })
     return promise;
@@ -113,6 +115,7 @@ export class ExerciseService {
     this.rootRef.child(key).remove()
     .then(res =>{
       this.fileService.deleteFileInfo(key);
+      this.difficultyService.deleteDifficulty(key);
       Swal.fire(
         'Ejercicio eliminado',
         '',
@@ -135,5 +138,10 @@ export class ExerciseService {
     })
 
   */  
+  updateDifficultyLevel(newValue: number, key: string){
+    this.difficultyService.updateDifficulty(newValue, key).then(newAverage =>{
+      this.rootRef.child(key).child('level').set(newAverage);
+    })
+  }
 
 }

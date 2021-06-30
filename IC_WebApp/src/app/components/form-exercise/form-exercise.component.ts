@@ -113,6 +113,9 @@ export class FormExerciseComponent implements OnInit {
   */
 
   ngOnInit(): void {
+
+    window.scrollTo({top: 0});
+    
     this.createExerciseForm();
 
     if(this.exerciseCode !== "none"){
@@ -240,31 +243,37 @@ export class FormExerciseComponent implements OnInit {
           code: [this.exercise.solution.code, Validators.required]
         })
       })
-      this.exercise.examples.forEach(element => {
-        this.examples.push(
-          this.fb.group({
-            call: [element.call, Validators.required],
-            result: [element.result, Validators.required],
-            comment: [element.comment]
-          })
-        )
-      });
-      this.exercise.solution.inputs.forEach(element => {
-        this.inputs.push(
-          this.fb.group({
-            name: [element.name, Validators.required],
-            type: [element.type, Validators.required]
-          })
-        )
-      });
-      this.exercise.solution.outputs.forEach(element => {
-        this.outputs.push(
-          this.fb.group({
-            name: [element.name, Validators.required],
-            type: [element.type, Validators.required]
-          })
-        )
-      });
+      if(typeof this.exercise.examples !== 'undefined'){
+        this.exercise.examples.forEach(element => {
+          this.examples.push(
+            this.fb.group({
+              call: [element.call, Validators.required],
+              result: [element.result, Validators.required],
+              comment: [element.comment]
+            })
+          )
+        });
+      }
+      if(typeof this.exercise.solution.inputs !== 'undefined'){
+        this.exercise.solution.inputs.forEach(element => {
+          this.inputs.push(
+            this.fb.group({
+              name: [element.name, Validators.required],
+              type: [element.type, Validators.required]
+            })
+          )
+        });
+      }
+      if(typeof this.exercise.solution.outputs !== 'undefined'){
+        this.exercise.solution.outputs.forEach(element => {
+          this.outputs.push(
+            this.fb.group({
+              name: [element.name, Validators.required],
+              type: [element.type, Validators.required]
+            })
+          )
+        });
+      }
   }
 
   createExerciseForm(){
@@ -385,6 +394,11 @@ export class FormExerciseComponent implements OnInit {
           creator: this.userService.readUsernameToken(),
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
+        }
+        this.fileInfo = {
+          name: '',
+          URL: '',
+          path: ''
         }
         this.exerciseService.saveNewExercise(this.exercise, this.file, this.fileInfo);
       }

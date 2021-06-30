@@ -18,7 +18,13 @@
                 </li>
 
                 <li>
-                    <a class="nav-link  d-lg-none" [routerLink]="['/home']" *ngIf="!isInSession()" (click)="logOut()">
+                    <a class="nav-link  d-lg-none" [routerLink]="['/login']" *ngIf="!isInSession()">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-link  d-lg-none" [routerLink]="['/home']" *ngIf="isInSession()" (click)="logOut()">
                         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </a>
                 </li>
@@ -38,7 +44,13 @@
                     </div>
                 </div>
                 <div class="col-3 text-right">
-                    <button type="button" class="btn btn-secondary" [routerLink]="['/home']" *ngIf="!isInSession()" (click)="logOut()">
+                    <button type="button" class="btn btn-secondary" [routerLink]="['/login']" *ngIf="!isInSession()">
+                        Iniciar Sesión
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-secondary" [routerLink]="['/home']" *ngIf="isInSession()" (click)="logOut()">
+                        <span class="text-light">Cerrar Sesión  </span>
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
