@@ -1,0 +1,113 @@
+<app-loader *ngIf="!isDataLoaded " class="overlay animated"></app-loader>
+
+<div *ngIf="isDataLoaded " id="exercises-row" class="container-fluid animated">
+
+    <div class="row px-2 py-4">
+        <div class="col-xl-3">
+
+            <app-category-card [categories]="sections" (change)="selectedSection=$event; updateLevels();"></app-category-card>
+            <hr>
+            <app-difficulty-card [difficulties]="levels" (change)="selectedLevel=$event; updateSections();"></app-difficulty-card>
+            <hr>
+        </div>
+        <div class="col-xl-9 ">
+            <div>
+
+                <div class="row ">
+
+                    <div class="col-lg-2 ">
+                        <h5>
+                            Categoria:
+                        </h5>
+                        <h5>
+                            {{selectedSection.replace("all","Todas ")}}
+                        </h5>
+                    </div>
+
+                    <div class="col-lg-2 ">
+                        <h5>
+                            Dificultad:
+                        </h5>
+                        <h5 *ngIf="selectedLevel=='all' ">
+                            Todas
+                        </h5>
+                        <h5 *ngIf="selectedLevel!='all' ">
+                            <i *ngFor='let in of counter(selectedLevel,true)' class="fas fa-star text-warning "></i>
+                            <i *ngFor='let in of counter(selectedLevel,false)' class="fas fa-star "></i>
+                        </h5>
+                    </div>
+
+                    <div class="col-lg-2 ">
+
+                        <!--  -->
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-dark my-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span *ngIf="key=='name' ">
+                                        Nombre
+                                    </span>
+                                    <span *ngIf="key=='created' ">
+                                        Fecha
+                                    </span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item " (click)="sortBy( 'created') ">
+                                        <h6>
+                                            Fecha de creación
+                                        </h6>
+                                    </a>
+                                    <a class="dropdown-item " (click)="sortBy( 'name') ">
+                                        <h6>
+                                            Nombre
+                                        </h6>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <button type="button " class="btn btn-outline-dark my-1 " (click)="sortOrder() ">
+                                <i class="fas " [ngClass]="!reverse? 'fa-chevron-down': 'fa-chevron-up' "></i>
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6 pt-3 text-center text-lg-right ">
+                        <app-pagination-controls [page_number]="page_number " [id]=" 'exercises' " (change)="page_number=$event "></app-pagination-controls>
+
+                    </div>
+
+                </div>
+
+                <div class="row ml-3 py-3 animated" *ngIf="(exercises.length==0)">
+                    <div class="row">
+                        <h4>
+                            No hay ejercicios disponibles.
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="row py-3 animated " *ngIf="isDataLoaded">
+                    <div class="col-12" *ngIf="filter!=''">
+                        <h5>
+                            Se han encontrado <span class="font-weight-bold">{{(getExercises() | filter:filter).length}}</span> resultados de <span class="text-info font-weight-bold">"{{filter}}"</span>...
+                        </h5>
+                    </div>
+                    <div *ngFor="let exercise of getExercises() | filter:filter | paginate: { itemsPerPage: page_size, currentPage: page_number } " class="col-md-6 py-3 ">
+                        <app-exercise-card [exerciseCode]=exercise.key [exercise]=exercise.exercise (delete)="getData()"></app-exercise-card>
+                    </div>
+                </div>
+
+                <div class="text-center text-lg-right">
+                    <app-pagination-controls (click)="scroll( 'exercises-row') " [page_number]="page_number " [id]=" 'exercises' " (change)="page_number=$event "></app-pagination-controls>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+</div>

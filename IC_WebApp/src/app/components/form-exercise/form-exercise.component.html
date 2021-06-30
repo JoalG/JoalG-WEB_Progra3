@@ -1,0 +1,193 @@
+<app-loader *ngIf="!isDataLoaded " class="overlay animated"></app-loader>
+
+<div *ngIf="isDataLoaded " class="container-fluid pt-3 main-cont animated">
+    <h1>Nuevo Ejercicio</h1>
+    <hr>
+    <form [formGroup]="exerciseForm" (ngSubmit)="saveExercise()">
+        <div class="card mx-md-5 card-shadow">
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Información General</h2>
+            </div>
+            <div class="card-body bg-light">
+                <div class="form-group">
+                    <label for="name">Nombre del ejercicio</label>
+                    <input type="text" class="form-control" id="name" placeholder="Ej. Árbol" formControlName="name" [class.is-invalid]="nameInvalid">
+                    <small *ngIf="nameInvalid" class="text-danger">
+                        Debe ingresar un nombre para el ejercicio
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="section">Categoría</label>
+                    <input type="text" class="form-control" id="section" placeholder="Ej. Árboles" formControlName="section" [class.is-invalid]="sectionInvalid">
+                    <small *ngIf="sectionInvalid" class="text-danger">
+                        Debe ingresar una categoría para el ejercicio
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="level">Nivel de dificultad</label>
+                    <input type="number" class="form-control" id="level" placeholder="1-5" formControlName="level" [class.is-invalid]="levelInvalid" min="1" max="5">
+                    <small *ngIf="levelInvalid" class="text-danger">
+                        Debe ingresar una dificultad para el ejercicio entre 1 y 5
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="call">Llamada de la función</label>
+                    <input type="text" class="form-control" id="call" placeholder="Ej. arbol (centro, hijoizquierdo, hijoderecho)" formControlName="call" [class.is-invalid]="callInvalid">
+                    <small *ngIf="callInvalid" class="text-danger">
+                        Debe ingresar una llamada
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="details">Detalles</label>
+                    <textarea class="form-control" id="details" rows="3" placeholder="Ej. Realice una función que retorne una lista que simboliza un árbol..." formControlName="details" [class.is-invalid]="detailsInvalid">
+                    </textarea>
+                    <small *ngIf="detailsInvalid" class="text-danger">
+                        Debe ingresar una descripción para el ejercicio
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="custom-file-upload">
+                        <input type="file" id="file" (change)="setFile($event)" [class.is-invalid] = "fileInvalid()">
+                        <i class="fas fa-upload"></i> Subir archivo
+                    </label>
+                    <p>{{fileName}}</p>
+                </div>
+                <small *ngIf="fileInvalid()" class="text-danger">
+                    El archivo debe ser menor de 25 mb
+                </small>
+                <a href="{{fileInfo.URL}}" download="" target="_blank" *ngIf="fileURLExists">Click aquí para descargar</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="card mx-md-5">
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Ejemplos</h2>
+            </div>
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-md-6 mt-3" *ngFor="let controlGroup of examples.controls; let i = index">
+                        <div class="card card-shadow">
+                            <div class="card-body" [formGroup]="getExampleGroup(i)">
+                                <div class="form-group">
+                                    <label for="exampleCall">Llamada</label>
+                                    <input type="text" class="form-control" id="exampleCall" placeholder="Ej. arbol(100,[90,80],[110,105])" formControlName="call" [class.is-invalid]="exampleCallInvalid(i)">
+                                    <small *ngIf="exampleCallInvalid(i)" class="text-danger">
+                                        Debe ingresar una llamada
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleResult">Resultado</label>
+                                    <input type="text" class="form-control" id="exampleResult" placeholder="Ej. [10, [5, 4, 6], [7, 8, 9]]" formControlName="result" [class.is-invalid]="exampleResultInvalid(i)">
+                                    <small *ngIf="exampleResultInvalid(i)" class="text-danger">
+                                        Debe ingresar una resultado para la llamada
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleComment">Comentarios</label>
+                                    <textarea class="form-control" id="exampleComment" rows="3" placeholder="Ej. ..." formControlName="comment"></textarea>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" (click)="removeExample(i)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary" (click)="addExample()">Agregar ejemplo <i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="card mx-md-5">
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Solución</h2>
+            </div>
+            <div class="card-body bg-light">
+                <h4>Entradas</h4>
+                <div class="row">
+                    <div class="col-md-6 mt-3" *ngFor="let controlGroup of inputs.controls; let i = index">
+                        <div class="card card-shadow">
+                            <div class="card-body " [formGroup]="getInputGroup(i)">
+                                <div class="form-group">
+                                    <label for="inputName">Nombre</label>
+                                    <input type="text" class="form-control" id="inputName" placeholder="Ej. centro" formControlName="name" [class.is-invalid]="inputNameInvalid(i)">
+                                    <small *ngIf="inputNameInvalid(i)" class="text-danger">
+                                        Debe ingresar una nombre para la entrada
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputType">Tipo</label>
+                                    <input type="text" class="form-control" id="inputType" placeholder="Ej. Un valor para la raiz" formControlName="type" [class.is-invalid]="inputTypeInvalid(i)">
+                                    <small *ngIf="inputTypeInvalid(i)" class="text-danger">
+                                        Debe ingresar un tipo para la entrada
+                                    </small>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" (click)="removeInput(i)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary" (click)="addInput()">Agregar entrada <i class="fas fa-plus"></i></button>
+                </div>
+
+                <hr>
+
+                <h4>Salidas</h4>
+                <div class="row">
+                    <div class="col-md-6 mt-3" *ngFor="let controlGroup of outputs.controls; let i = index">
+                        <div class="card card-shadow">
+                            <div class="card-body" [formGroup]="getOutputGroup(i)">
+                                <div class="form-group">
+                                    <label for="outputName">Nombre</label>
+                                    <input type="text" class="form-control" id="outputName" placeholder="Ej. centro" formControlName="name" [class.is-invalid]="outputNameInvalid(i)">
+                                    <small *ngIf="outputNameInvalid(i)" class="text-danger">
+                                        Debe ingresar una nombre para la salida
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="outputType">Tipo</label>
+                                    <input type="text" class="form-control" id="outputType" placeholder="Ej. Un valor para la raiz" formControlName="type" [class.is-invalid]="outputTypeInvalid(i)">
+                                    <small *ngIf="outputTypeInvalid(i)" class="text-danger">
+                                        Debe ingresar un tipo para la salida
+                                    </small>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" (click)="removeOutput(i)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary" (click)="addOutput()">Agregar salida <i class="fas fa-plus"></i></button>
+                </div>
+
+                <hr>
+
+                <h4>Código</h4>
+                <div class="form-group" [formGroup]="solution">
+                    <div style="height: 400px">
+                        <ngs-code-editor style="height: 100%" theme="vs" [codeModel]="solutionCodeModel" [readOnly]="false" [options]="options" (valueChanged)="onCodeChanged($event)">
+                        </ngs-code-editor>
+                    </div>
+                    <small *ngIf="codeInvalid" class="text-danger">
+                        Debe ingresar código para la solución
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="container-fluid mb-5 text-center">
+            <button type="submit" class="btn btn-primary block btn-block">Guardar ejercicio </button>
+        </div>
+    </form>
+</div>

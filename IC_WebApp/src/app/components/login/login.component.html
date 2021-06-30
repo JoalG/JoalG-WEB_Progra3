@@ -1,0 +1,52 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Easiest Way to Add Input Masks to Your Forms</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="registration-form">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-icon">
+                <span><i class="icon icon-user"></i></span>
+            </div>
+            <h2 class="text-center mb-4">Iniciar Sesión</h2>
+            <div class="form-group">
+                <input 
+                    type="email" 
+                    class="form-control item" 
+                    id="email"
+                    formControlName="email"
+                    [class.is-invalid] = "emailInvalid"
+                    placeholder="Correo electrónico"
+                >
+                <small *ngIf="emailInvalid" class="text-danger">
+                    Debe ingresar su correo electrónico
+                </small>
+            </div>
+            <div class="form-group">
+                <input 
+                        type="password" 
+                        class="form-control item" 
+                        id="password"
+                        formControlName="password"
+                        [class.is-invalid] = "passwordInvalid"
+                        placeholder="Contraseña"
+                >
+                <small *ngIf="passwordInvalid" class="text-danger">
+                    Debe ingresar su contraseña
+                </small>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block create-account">Iniciar sesión</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+</body>
+
+
+
