@@ -240,31 +240,37 @@ export class FormExerciseComponent implements OnInit {
           code: [this.exercise.solution.code, Validators.required]
         })
       })
-      this.exercise.examples.forEach(element => {
-        this.examples.push(
-          this.fb.group({
-            call: [element.call, Validators.required],
-            result: [element.result, Validators.required],
-            comment: [element.comment]
-          })
-        )
-      });
-      this.exercise.solution.inputs.forEach(element => {
-        this.inputs.push(
-          this.fb.group({
-            name: [element.name, Validators.required],
-            type: [element.type, Validators.required]
-          })
-        )
-      });
-      this.exercise.solution.outputs.forEach(element => {
-        this.outputs.push(
-          this.fb.group({
-            name: [element.name, Validators.required],
-            type: [element.type, Validators.required]
-          })
-        )
-      });
+      if(typeof this.exercise.examples !== 'undefined'){
+        this.exercise.examples.forEach(element => {
+          this.examples.push(
+            this.fb.group({
+              call: [element.call, Validators.required],
+              result: [element.result, Validators.required],
+              comment: [element.comment]
+            })
+          )
+        });
+      }
+      if(typeof this.exercise.solution.inputs !== 'undefined'){
+        this.exercise.solution.inputs.forEach(element => {
+          this.inputs.push(
+            this.fb.group({
+              name: [element.name, Validators.required],
+              type: [element.type, Validators.required]
+            })
+          )
+        });
+      }
+      if(typeof this.exercise.solution.outputs !== 'undefined'){
+        this.exercise.solution.outputs.forEach(element => {
+          this.outputs.push(
+            this.fb.group({
+              name: [element.name, Validators.required],
+              type: [element.type, Validators.required]
+            })
+          )
+        });
+      }
   }
 
   createExerciseForm(){
