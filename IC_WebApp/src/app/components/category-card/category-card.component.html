@@ -10,7 +10,7 @@
         <button type="button" class="btn my-2 mr-2 animated" [ngClass]="category.selected? 'btn-dark': 'btn-outline-dark'" (click)="selectCategory(i)">
                 <h6 class="pt-1">
                     {{category.name}} 
-                    <span class="badge" [ngClass]="category.selected? 'badge-light': 'badge-dark'">{{category.amount}}</span>
+                    <span *ngIf="!search" class="badge animated" [ngClass]="category.selected? 'badge-light': 'badge-dark'">{{category.amount}}</span>
                 </h6> 
         </button>
     </div>

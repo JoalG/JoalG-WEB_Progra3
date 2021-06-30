@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-category-card',
@@ -12,10 +13,12 @@ export class CategoryCardComponent implements OnInit {
   
   hide: boolean = false;
   selected:string = "all";
+  search = false;
 
-  constructor() { }
+  constructor(private searchService: SearchService) { }
 
   ngOnInit(): void {
+    this.searchService.data$.subscribe(res => {this.search = res!=""});
   }
   
   selectCategory(index:number){
