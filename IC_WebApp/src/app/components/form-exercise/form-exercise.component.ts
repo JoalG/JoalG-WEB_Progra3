@@ -232,7 +232,7 @@ export class FormExerciseComponent implements OnInit {
   createFilledExerciseForm(){
       this.exerciseForm = this.fb.group({
         call: [this.exercise.call, Validators.required],
-        level: [this.exercise.level, Validators.required],
+        level: [this.exercise.level, [Validators.required, Validators.min(1), Validators.max(5)]],
         name: [this.exercise.name, Validators.required],
         section: [this.exercise.section, Validators.required],
         details: [this.exercise.details, Validators.required],
@@ -279,7 +279,7 @@ export class FormExerciseComponent implements OnInit {
   createExerciseForm(){
     this.exerciseForm = this.fb.group({
       call: ['', Validators.required],
-      level: ['', Validators.required],
+      level: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
       name: ['', Validators.required],
       section: ['', Validators.required],
       details: ['', Validators.required],

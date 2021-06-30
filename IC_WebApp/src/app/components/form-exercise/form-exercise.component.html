@@ -25,9 +25,9 @@
                 </div>
                 <div class="form-group">
                     <label for="level">Nivel de dificultad</label>
-                    <input type="number" class="form-control" id="level" placeholder="1-5" formControlName="level" [class.is-invalid]="levelInvalid">
+                    <input type="number" class="form-control" id="level" placeholder="1-5" formControlName="level" [class.is-invalid]="levelInvalid" min="1" max="5">
                     <small *ngIf="levelInvalid" class="text-danger">
-                        Debe ingresar una dificultad para el ejercicio
+                        Debe ingresar una dificultad para el ejercicio entre 1 y 5
                     </small>
                 </div>
                 <div class="form-group">
