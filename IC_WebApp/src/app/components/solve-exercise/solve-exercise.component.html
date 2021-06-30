@@ -85,12 +85,6 @@
                         <div class="col">
                             <h3>Definición</h3>
                         </div>
-                        <form class="d-inline" [formGroup]="difficulty">
-                            <div class="form-group">
-                                <input type="number" class="form-control" id="level" placeholder="1-5" formControlName="level" placeholder="Calificar dificultad">
-                            </div>
-                            <button type="button" class="btn btn-info" (click)="setDifficulty()"></button>
-                        </form>
                         <div class="col text-right mt-1">
 
                             <button type="button" class="btn btn-info" [disabled]="fileURL === ''" (click)="downloadMyFile()"><i class="fas fa-lg fa-file-download"></i></button>
@@ -100,15 +94,12 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-7">
                             <h2 class="font-weight-bold">{{exercise.name}}</h2>
                             <h6><span class="font-weight-bold">Categoría: </span> {{exercise.section}}</h6>
                         </div>
-                        <div class="col-4 text-right">
-                            <h5>
-                                <input type="radio" id="star5" name="rate" value="5" />
-                                <i *ngFor='let in of counter(exercise.level,false)' class="fas fa-lg fa-star"></i>
-                            </h5>
+                        <div class="col-5 text-right">
+                            <app-star-rating [ratingInfo]="getRatingInfo()"></app-star-rating>
                         </div>
                     </div>
                     <hr>

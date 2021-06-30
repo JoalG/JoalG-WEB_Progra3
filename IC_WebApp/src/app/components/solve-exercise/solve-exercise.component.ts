@@ -18,7 +18,6 @@ export class SolveExerciseComponent implements OnInit {
    exerciseCode: string = "";
    exercise!: Exercise;
    fileURL: string = '';
-   difficulty!: FormGroup;
 
    hide:boolean = true;
    
@@ -70,9 +69,6 @@ export class SolveExerciseComponent implements OnInit {
          this.exercise = <Exercise>data;
          console.log(this.exercise);
          this.solutionCodeModel.value = this.exercise.solution.code;
-         this.difficulty = this.fb.group({
-            level: this.exercise.level
-         })
          this.isDataLoaded = true;  
       }).catch((data)=>console.log(data));
    }
@@ -111,8 +107,10 @@ export class SolveExerciseComponent implements OnInit {
       link.remove();
   }
 
-  setDifficulty(){
-     this.exerciseService.updateDifficultyLevel(this.difficulty.get('level')?.value, this.exercise.code);
-     console.log(this.difficulty.value)
+  getRatingInfo(){
+     return {
+        rating: this.exercise.level,
+        code: this.exercise.code
+      }
   }
 }
