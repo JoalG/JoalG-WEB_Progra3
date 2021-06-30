@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 
@@ -16,7 +17,11 @@ export class ExerciseCardComponent implements OnInit {
   @Input() exercise!: Exercise;
   hide:boolean = false;
 
-  constructor(private router: Router, private exerciseService: ExerciseService) { }
+  constructor(
+    private router: Router, 
+    private exerciseService: ExerciseService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -50,5 +55,7 @@ export class ExerciseCardComponent implements OnInit {
     })
   }
 
-
+  isInSession(){
+    return this.userService.leerToken() !== '';    
+  }
 }
