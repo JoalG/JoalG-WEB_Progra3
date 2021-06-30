@@ -113,6 +113,9 @@ export class FormExerciseComponent implements OnInit {
   */
 
   ngOnInit(): void {
+
+    window.scrollTo({top: 0});
+    
     this.createExerciseForm();
 
     if(this.exerciseCode !== "none"){

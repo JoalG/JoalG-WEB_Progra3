@@ -28,7 +28,10 @@ export class HomeComponent implements OnInit {
    isDataLoaded:boolean = false;
 
 
-   constructor(private exerciseService:ExerciseService,private searchService: SearchService) { }
+   constructor(
+      private exerciseService:ExerciseService,
+      private searchService: SearchService
+   ) { }
 
    ngOnInit(): void {
       this.getData();
@@ -164,7 +167,7 @@ export class HomeComponent implements OnInit {
 
 
    scroll(el: string) {
-      document.getElementById(el)?.scrollIntoView({behavior:"smooth"});
+      window.scrollTo({top: 0, behavior: 'smooth'});
    }
 
    counter(i: string, b:boolean) {

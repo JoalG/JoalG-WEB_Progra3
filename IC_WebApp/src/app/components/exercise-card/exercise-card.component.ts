@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exercise } from 'src/app/models/exercise.model';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 
@@ -14,9 +15,14 @@ export class ExerciseCardComponent implements OnInit {
 
   @Input() exerciseCode!: string ;
   @Input() exercise!: Exercise;
+  @Output() delete = new EventEmitter();
   hide:boolean = false;
 
-  constructor(private router: Router, private exerciseService: ExerciseService) { }
+  constructor(
+    private router: Router, 
+    private exerciseService: ExerciseService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -46,9 +52,12 @@ export class ExerciseCardComponent implements OnInit {
     .then((confirm)=>{
       if(confirm.isConfirmed){
         this.exerciseService.deleteExercise(this.exerciseCode);
+        this.delete.emit(this.exerciseCode);
       }
     })
   }
 
-
+  isInSession(){
+    return this.userService.leerToken() !== '';    
+  }
 }
