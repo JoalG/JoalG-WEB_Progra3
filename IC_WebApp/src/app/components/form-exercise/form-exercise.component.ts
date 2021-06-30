@@ -232,7 +232,7 @@ export class FormExerciseComponent implements OnInit {
   createFilledExerciseForm(){
       this.exerciseForm = this.fb.group({
         call: [this.exercise.call, Validators.required],
-        level: [this.exercise.level, Validators.required],
+        level: [this.exercise.level, [Validators.required, Validators.min(1), Validators.max(5)]],
         name: [this.exercise.name, Validators.required],
         section: [this.exercise.section, Validators.required],
         details: [this.exercise.details, Validators.required],
@@ -279,7 +279,7 @@ export class FormExerciseComponent implements OnInit {
   createExerciseForm(){
     this.exerciseForm = this.fb.group({
       call: ['', Validators.required],
-      level: ['', Validators.required],
+      level: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
       name: ['', Validators.required],
       section: ['', Validators.required],
       details: ['', Validators.required],
@@ -395,6 +395,7 @@ export class FormExerciseComponent implements OnInit {
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
         }
+        this.exercise.level = this.exercise.level.toString();
         this.fileInfo = {
           name: '',
           URL: '',
@@ -410,6 +411,7 @@ export class FormExerciseComponent implements OnInit {
           creator: this.exercise.creator,
           ...this.exerciseForm.value
         }
+        this.exercise.level = this.exercise.level.toString();
         this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file, this.fileInfo);
       }
     }
