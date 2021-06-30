@@ -93,8 +93,8 @@ export class UserService {
     ).pipe(
       map( (resp:any) => {
         this.saveUserDB(usuario, resp['localId'])
-        this.guardarToken( resp['idToken'] ); //al crearlo lo guarda en el LS
-        this.saveUsernameToken(usuario.name);
+        //this.guardarToken( resp['idToken'] ); //al crearlo lo guarda en el LS
+        //this.saveUsernameToken(usuario.name);
         return resp;
       })
     );
