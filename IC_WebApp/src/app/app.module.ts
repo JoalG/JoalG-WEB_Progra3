@@ -28,6 +28,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { LoaderComponent } from './components/loader/loader.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { AuthGuard } from './auth.guard';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
     HttpClientModule,    
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
