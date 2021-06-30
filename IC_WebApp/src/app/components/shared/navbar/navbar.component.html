@@ -1,7 +1,7 @@
 <div class="animated-fast">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-        <a class="navbar-brand mr-auto" href="#" (click)="refresh()">
+        <a class="navbar-brand mr-auto" href="#">
             <h3>
                 <i class="fas fa-sm fa-desktop"></i> IC
             </h3>
@@ -18,12 +18,12 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="isInSession()">
                       Administrar
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Crear ejercicio</a>
-                        <a class="dropdown-item" href="#">Crear usuario</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" *ngIf="isInSession()">
+                        <a class="dropdown-item" [routerLink]="['/form-exercise']">Crear ejercicio</a>
+                        <a class="dropdown-item" [routerLink]="['/sign-up']">Crear usuario</a>
                     </div>
                 </li>
 
