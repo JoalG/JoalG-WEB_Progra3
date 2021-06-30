@@ -2,7 +2,6 @@
 
 <div *ngIf="isDataLoaded " id="exercises-row" class="container-fluid animated">
 
-
     <div class="row px-2 py-4">
         <div class="col-xl-3">
 
@@ -76,11 +75,19 @@
 
                     </div>
 
-                    <div class="col-lg-6 text-center text-lg-right ">
+                    <div class="col-lg-6 pt-3 text-center text-lg-right ">
                         <app-pagination-controls [page_number]="page_number " [id]=" 'exercises' " (change)="page_number=$event "></app-pagination-controls>
 
                     </div>
 
+                </div>
+
+                <div class="row ml-3 py-3 animated" *ngIf="(exercises.length==0)">
+                    <div class="row">
+                        <h4>
+                            No hay ejercicios disponibles.
+                        </h4>
+                    </div>
                 </div>
 
                 <div class="row py-3 animated " *ngIf="isDataLoaded">
