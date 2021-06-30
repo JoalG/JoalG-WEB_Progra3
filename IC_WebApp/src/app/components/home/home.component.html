@@ -83,14 +83,18 @@
 
                 </div>
 
-                <div class="row py-3 animated " *ngIf="isDataLoaded ">
-
+                <div class="row py-3 animated " *ngIf="isDataLoaded">
+                    <div class="col-12" *ngIf="filter!=''">
+                        <h5>
+                            Se han encontrado <span class="font-weight-bold">{{(getExercises() | filter:filter).length}}</span> resultados de <span class="text-info font-weight-bold">"{{filter}}"</span>...
+                        </h5>
+                    </div>
                     <div *ngFor="let exercise of getExercises() | filter:filter | paginate: { itemsPerPage: page_size, currentPage: page_number } " class="col-md-6 py-3 ">
                         <app-exercise-card [exerciseCode]=exercise.key [exercise]=exercise.exercise (delete)="getData()"></app-exercise-card>
                     </div>
                 </div>
 
-                <div class="text-center text-lg-right ">
+                <div class="text-center text-lg-right">
                     <app-pagination-controls (click)="scroll( 'exercises-row') " [page_number]="page_number " [id]=" 'exercises' " (change)="page_number=$event "></app-pagination-controls>
 
                 </div>
