@@ -48,7 +48,7 @@ h1 {
 }
 
 .rating>label {
-    color: #ddd;
+    color: rgb(33, 37, 41);
     float: right
 }
 
