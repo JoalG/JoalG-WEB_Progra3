@@ -35,7 +35,12 @@ export class HomeComponent implements OnInit {
 
    ngOnInit(): void {
       this.getData();
-      this.searchService.data$.subscribe(res => this.filter = res)
+      this.searchService.data$.subscribe(async res => {
+         this.filter = res;
+         this.isDataLoaded = false;
+         await new Promise(resolve => setTimeout(resolve, 250)).then(()=>{});
+         this.isDataLoaded = true;
+      });
 
    }
 
