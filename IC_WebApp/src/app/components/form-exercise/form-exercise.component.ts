@@ -395,6 +395,7 @@ export class FormExerciseComponent implements OnInit {
           created: this.datePipe.transform(new Date(), "yyyy-MM-dd"),
           ...this.exerciseForm.value
         }
+        this.exercise.level = this.exercise.level.toString();
         this.fileInfo = {
           name: '',
           URL: '',
@@ -410,6 +411,7 @@ export class FormExerciseComponent implements OnInit {
           creator: this.exercise.creator,
           ...this.exerciseForm.value
         }
+        this.exercise.level = this.exercise.level.toString();
         this.exerciseService.updateExercise(this.exercise, this.exerciseCode, this.file, this.fileInfo);
       }
     }

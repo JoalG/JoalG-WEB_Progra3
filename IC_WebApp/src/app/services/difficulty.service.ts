@@ -43,7 +43,7 @@ export class DifficultyService {
           numOfVotes: difficulty.numOfVotes + 1
         })
         .then(()=>{
-          resolve(newAverage)
+          resolve(newAverage.toString())
         })
         .catch(err => {
           reject(err)
